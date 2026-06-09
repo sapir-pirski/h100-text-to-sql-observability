@@ -75,14 +75,14 @@ submission/mlops-assignment-submission.zip
 
 ```mermaid
 flowchart LR
-    user[Analyst question] --> api[FastAPI agent<br/>localhost:8001]
-    api --> graph[LangGraph<br/>generate -> execute -> verify -> revise]
+    user["Analyst question"] --> api["FastAPI agent localhost:8001"]
+    api --> graph["LangGraph generate -> execute -> verify -> revise"]
     graph --> sqlite[(BIRD SQLite DBs)]
-    graph --> vllm[vLLM OpenAI-compatible API<br/>localhost:8000]
-    vllm --> qwen[Qwen3-30B-A3B-Instruct-2507<br/>1x H100]
-    vllm --> prom[Prometheus scrape<br/>localhost:9090]
-    prom --> grafana[Grafana dashboard<br/>localhost:3000]
-    graph --> langfuse[Langfuse traces<br/>localhost:3001]
+    graph --> vllm["vLLM OpenAI-compatible API localhost:8000"]
+    vllm --> qwen["Qwen3-30B-A3B-Instruct-2507 on 1x H100"]
+    vllm --> prom["Prometheus scrape localhost:9090"]
+    prom --> grafana["Grafana dashboard localhost:3000"]
+    graph --> langfuse["Langfuse traces localhost:3001"]
 ```
 
 Runtime ports:
