@@ -1,0 +1,1976 @@
+{
+  "summary": {
+    "total": 30,
+    "correct": 16,
+    "accuracy": 0.5333333333333333,
+    "per_iteration": [
+      {
+        "iteration": 0,
+        "correct": 13,
+        "total": 30,
+        "accuracy": 0.43333333333333335,
+        "questions_with_sql": 30
+      },
+      {
+        "iteration": 1,
+        "correct": 16,
+        "total": 30,
+        "accuracy": 0.5333333333333333,
+        "questions_with_sql": 30
+      },
+      {
+        "iteration": 2,
+        "correct": 16,
+        "total": 30,
+        "accuracy": 0.5333333333333333,
+        "questions_with_sql": 30
+      }
+    ],
+    "agent_errors": 0,
+    "gold_sql_errors": 0,
+    "avg_latency_seconds": 1.2155961263999566,
+    "avg_agent_iterations": 1.4666666666666666,
+    "diagnostics": {
+      "valid_sql": 27,
+      "valid_sql_rate": 0.9,
+      "non_empty_result": 27,
+      "non_empty_result_rate": 0.9,
+      "exact_sql_match": 1,
+      "exact_sql_match_rate": 0.03333333333333333,
+      "attempt_count_distribution": {
+        "1": 17,
+        "2": 12,
+        "3": 1
+      },
+      "sql_error_categories": {
+        "OperationalError": 3
+      }
+    }
+  },
+  "by_db": {
+    "california_schools": {
+      "total": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 2,
+          "total": 3,
+          "accuracy": 0.6666666666666666,
+          "questions_with_sql": 3
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 0.6582154046665588,
+      "avg_agent_iterations": 1.0,
+      "diagnostics": {
+        "valid_sql": 3,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 3,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "1": 3
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.6666666666666666
+      }
+    },
+    "card_games": {
+      "total": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 1,
+          "total": 3,
+          "accuracy": 0.3333333333333333,
+          "questions_with_sql": 3
+        },
+        {
+          "iteration": 1,
+          "correct": 2,
+          "total": 3,
+          "accuracy": 0.6666666666666666,
+          "questions_with_sql": 3
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 1.7684434903332356,
+      "avg_agent_iterations": 1.3333333333333333,
+      "diagnostics": {
+        "valid_sql": 3,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 3,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 1,
+        "exact_sql_match_rate": 0.3333333333333333,
+        "attempt_count_distribution": {
+          "1": 2,
+          "2": 1
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.3333333333333333,
+        "1": 0.6666666666666666
+      }
+    },
+    "codebase_community": {
+      "total": 5,
+      "correct": 3,
+      "accuracy": 0.6,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 3,
+          "total": 5,
+          "accuracy": 0.6,
+          "questions_with_sql": 5
+        },
+        {
+          "iteration": 1,
+          "correct": 3,
+          "total": 5,
+          "accuracy": 0.6,
+          "questions_with_sql": 5
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 2.036622026399982,
+      "avg_agent_iterations": 1.4,
+      "diagnostics": {
+        "valid_sql": 5,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 5,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "1": 3,
+          "2": 2
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.6,
+        "1": 0.6
+      }
+    },
+    "financial": {
+      "total": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 2,
+          "total": 3,
+          "accuracy": 0.6666666666666666,
+          "questions_with_sql": 3
+        },
+        {
+          "iteration": 1,
+          "correct": 2,
+          "total": 3,
+          "accuracy": 0.6666666666666666,
+          "questions_with_sql": 3
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 1.1972989163332386,
+      "avg_agent_iterations": 1.3333333333333333,
+      "diagnostics": {
+        "valid_sql": 3,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 3,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "1": 2,
+          "2": 1
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.6666666666666666,
+        "1": 0.6666666666666666
+      }
+    },
+    "formula_1": {
+      "total": 4,
+      "correct": 1,
+      "accuracy": 0.25,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 0,
+          "total": 4,
+          "accuracy": 0.0,
+          "questions_with_sql": 4
+        },
+        {
+          "iteration": 1,
+          "correct": 1,
+          "total": 4,
+          "accuracy": 0.25,
+          "questions_with_sql": 4
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 1.0715092702500897,
+      "avg_agent_iterations": 2.0,
+      "diagnostics": {
+        "valid_sql": 3,
+        "valid_sql_rate": 0.75,
+        "non_empty_result": 3,
+        "non_empty_result_rate": 0.75,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "2": 4
+        },
+        "sql_error_categories": {
+          "OperationalError": 1
+        }
+      },
+      "iteration_accuracy": {
+        "0": 0.0,
+        "1": 0.25
+      }
+    },
+    "student_club": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 3,
+          "total": 4,
+          "accuracy": 0.75,
+          "questions_with_sql": 4
+        },
+        {
+          "iteration": 1,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "questions_with_sql": 4
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 0.7063683635001325,
+      "avg_agent_iterations": 1.25,
+      "diagnostics": {
+        "valid_sql": 4,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 4,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "1": 3,
+          "2": 1
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.75,
+        "1": 1.0
+      }
+    },
+    "superhero": {
+      "total": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 2,
+          "total": 3,
+          "accuracy": 0.6666666666666666,
+          "questions_with_sql": 3
+        },
+        {
+          "iteration": 1,
+          "correct": 2,
+          "total": 3,
+          "accuracy": 0.6666666666666666,
+          "questions_with_sql": 3
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 0.700726879333312,
+      "avg_agent_iterations": 1.3333333333333333,
+      "diagnostics": {
+        "valid_sql": 3,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 3,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "1": 2,
+          "2": 1
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.6666666666666666,
+        "1": 0.6666666666666666
+      }
+    },
+    "thrombosis_prediction": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 0,
+          "total": 3,
+          "accuracy": 0.0,
+          "questions_with_sql": 3
+        },
+        {
+          "iteration": 1,
+          "correct": 0,
+          "total": 3,
+          "accuracy": 0.0,
+          "questions_with_sql": 3
+        },
+        {
+          "iteration": 2,
+          "correct": 0,
+          "total": 3,
+          "accuracy": 0.0,
+          "questions_with_sql": 3
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 1.6640417636664704,
+      "avg_agent_iterations": 2.3333333333333335,
+      "diagnostics": {
+        "valid_sql": 1,
+        "valid_sql_rate": 0.3333333333333333,
+        "non_empty_result": 1,
+        "non_empty_result_rate": 0.3333333333333333,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "2": 2,
+          "3": 1
+        },
+        "sql_error_categories": {
+          "OperationalError": 2
+        }
+      },
+      "iteration_accuracy": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.0
+      }
+    },
+    "toxicology": {
+      "total": 2,
+      "correct": 0,
+      "accuracy": 0.0,
+      "per_iteration": [
+        {
+          "iteration": 0,
+          "correct": 0,
+          "total": 2,
+          "accuracy": 0.0,
+          "questions_with_sql": 2
+        }
+      ],
+      "agent_errors": 0,
+      "gold_sql_errors": 0,
+      "avg_latency_seconds": 0.6035418809997282,
+      "avg_agent_iterations": 1.0,
+      "diagnostics": {
+        "valid_sql": 2,
+        "valid_sql_rate": 1.0,
+        "non_empty_result": 2,
+        "non_empty_result_rate": 1.0,
+        "exact_sql_match": 0,
+        "exact_sql_match_rate": 0.0,
+        "attempt_count_distribution": {
+          "1": 2
+        },
+        "sql_error_categories": {}
+      },
+      "iteration_accuracy": {
+        "0": 0.0
+      }
+    }
+  },
+  "wall_clock_seconds": 40.04117363500018,
+  "results": [
+    {
+      "question": "What is the coordinates location of the circuits for Australian grand prix?",
+      "db_id": "formula_1",
+      "gold_sql": "SELECT DISTINCT T1.lat, T1.lng FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.name = 'Australian Grand Prix'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.780103149000297,
+      "agent_iterations": 2,
+      "final_sql": "SELECT DISTINCT c.lat, c.lng\nFROM circuits c\nJOIN races r ON c.circuitId = r.circuitId\nWHERE r.name = 'Australian Grand Prix';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT c.lat, c.lng\nFROM circuits c\nJOIN races r ON c.circuitId = r.circuitId\nWHERE r.name = 'Australian Grand Prix';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 11,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT DISTINCT c.lat, c.lng\nFROM circuits c\nJOIN races r ON c.circuitId = r.circuitId\nWHERE r.name = 'Australian Grand Prix';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT c.lat, c.lng\nFROM circuits c\nJOIN races r ON c.circuitId = r.circuitId\nWHERE r.name = 'Australian Grand Prix';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Duplicate rows; add DISTINCT.",
+          "result": "OK: 11 rows.\nCOLUMNS: lat, lng\nFIRST ROWS:\n-34.9272 | 138.617\n-34.9272 | 138.617\n-34.9272 | 138.617\n... (8 more rows)",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": true,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT DISTINCT c.lat, c.lng\nFROM circuits c\nJOIN races r ON c.circuitId = r.circuitId\nWHERE r.name = 'Australian Grand Prix';",
+          "issue": "Duplicate rows; add DISTINCT."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: lat, lng\nFIRST ROWS:\n-34.9272 | 138.617",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "List down Ajax's superpowers.",
+      "db_id": "superhero",
+      "gold_sql": "SELECT T3.power_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T1.superhero_name = 'Ajax'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.4075378359998467,
+      "agent_iterations": 1,
+      "final_sql": "SELECT sp.power_name\nFROM superhero s\nJOIN hero_power hp ON s.id = hp.hero_id\nJOIN superpower sp ON hp.power_id = sp.id\nWHERE s.superhero_name = 'Ajax';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT sp.power_name\nFROM superhero s\nJOIN hero_power hp ON s.id = hp.hero_id\nJOIN superpower sp ON hp.power_id = sp.id\nWHERE s.superhero_name = 'Ajax';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 5,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT sp.power_name\nFROM superhero s\nJOIN hero_power hp ON s.id = hp.hero_id\nJOIN superpower sp ON hp.power_id = sp.id\nWHERE s.superhero_name = 'Ajax';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 5 rows.\nCOLUMNS: power_name\nFIRST ROWS:\nAgility\nSuper Strength\nSuper Speed\n... (2 more rows)",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "List the top five schools, by descending order, from the highest to the lowest, the most number of Enrollment (Ages 5-17). Please give their NCES school identification number.",
+      "db_id": "california_schools",
+      "gold_sql": "SELECT T1.NCESSchool FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T2.`Enrollment (Ages 5-17)` DESC LIMIT 5",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.6879717039996649,
+      "agent_iterations": 1,
+      "final_sql": "SELECT s.NCESSchool\nFROM schools s\nJOIN frpm f ON s.CDSCode = f.CDSCode\nORDER BY f.\"Enrollment (Ages 5-17)\" DESC\nLIMIT 5;",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT s.NCESSchool\nFROM schools s\nJOIN frpm f ON s.CDSCode = f.CDSCode\nORDER BY f.\"Enrollment (Ages 5-17)\" DESC\nLIMIT 5;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 5,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT s.NCESSchool\nFROM schools s\nJOIN frpm f ON s.CDSCode = f.CDSCode\nORDER BY f.\"Enrollment (Ages 5-17)\" DESC\nLIMIT 5;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 5 rows.\nCOLUMNS: NCESSchool\nFIRST ROWS:\n11707\n04653\n08283\n... (2 more rows)",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "What is the average number of crimes committed in 1995 in regions where the number exceeds 4000 and the region has accounts that are opened starting from the year 1997?",
+      "db_id": "financial",
+      "gold_sql": "SELECT AVG(T1.A15) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T2.date) >= '1997' AND T1.A15 > 4000",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 2.0931647699999303,
+      "agent_iterations": 2,
+      "final_sql": "SELECT AVG(d.A14) AS average_crimes\nFROM district d\nWHERE d.A14 > 4000\n  AND EXISTS (\n    SELECT 1\n    FROM account a\n    WHERE a.district_id = d.district_id\n      AND strftime('%Y', a.date) >= '1997'\n  )\n  AND d.A14 IS NOT NULL;",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT AVG(d.A14) AS average_crimes\nFROM district d\nWHERE d.A14 > 4000\n  AND EXISTS (\n    SELECT 1\n    FROM account a\n    WHERE a.district_id = d.district_id\n      AND strftime('%Y', a.date) >= '1997'\n  );",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT AVG(d.A14) AS average_crimes\nFROM district d\nWHERE d.A14 > 4000\n  AND EXISTS (\n    SELECT 1\n    FROM account a\n    WHERE a.district_id = d.district_id\n      AND strftime('%Y', a.date) >= '1997'\n  )\n  AND d.A14 IS NOT NULL;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT AVG(d.A14) AS average_crimes\nFROM district d\nWHERE d.A14 > 4000\n  AND EXISTS (\n    SELECT 1\n    FROM account a\n    WHERE a.district_id = d.district_id\n      AND strftime('%Y', a.date) >= '1997'\n  );"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Aggregate returned NULL.",
+          "result": "OK: 1 rows.\nCOLUMNS: average_crimes\nFIRST ROWS:\nNone",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT AVG(d.A14) AS average_crimes\nFROM district d\nWHERE d.A14 > 4000\n  AND EXISTS (\n    SELECT 1\n    FROM account a\n    WHERE a.district_id = d.district_id\n      AND strftime('%Y', a.date) >= '1997'\n  )\n  AND d.A14 IS NOT NULL;",
+          "issue": "Aggregate returned NULL."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Aggregate returned NULL.",
+          "result": "OK: 1 rows.\nCOLUMNS: average_crimes\nFIRST ROWS:\nNone",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        }
+      ]
+    },
+    {
+      "question": "How many male clients in 'Hl.m. Praha' district?",
+      "db_id": "financial",
+      "gold_sql": "SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A2 = 'Hl.m. Praha'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.0035144220000802,
+      "agent_iterations": 1,
+      "final_sql": "SELECT COUNT(*) \nFROM client c\nJOIN district d ON c.district_id = d.district_id\nWHERE c.gender = 'M' \n  AND d.A2 = 'Hl.m. Praha';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM client c\nJOIN district d ON c.district_id = d.district_id\nWHERE c.gender = 'M' \n  AND d.A2 = 'Hl.m. Praha';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM client c\nJOIN district d ON c.district_id = d.district_id\nWHERE c.gender = 'M' \n  AND d.A2 = 'Hl.m. Praha';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n339",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "What is the average fastest lap time in seconds for Lewis Hamilton in all the Formula_1 races?",
+      "db_id": "formula_1",
+      "gold_sql": "SELECT AVG(CAST(SUBSTR(T2.fastestLapTime, 1, INSTR(T2.fastestLapTime, ':') - 1) AS INTEGER) * 60 + CAST(SUBSTR(T2.fastestLapTime, INSTR(T2.fastestLapTime, ':') + 1) AS REAL)) FROM drivers AS T1 INNER JOIN results AS T2 ON T1.driverId = T2.driverId WHERE T1.surname = 'Hamilton' AND T1.forename = 'Lewis'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.6366555429999607,
+      "agent_iterations": 2,
+      "final_sql": "SELECT AVG(CAST(substr(fastestLapTime, 1, 2) AS INTEGER) * 60 + CAST(substr(fastestLapTime, 4, 2) AS INTEGER) + CAST(substr(fastestLapTime, 7, 3) AS REAL) / 1000) AS average_fastest_lap_seconds\nFROM results r\nJOIN drivers d ON r.driverId = d.driverId\nWHERE d",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT AVG(CAST(substr(fastestLapTime, 1, 2) AS INTEGER) * 60 + CAST(substr(fastestLapTime, 4, 2) AS INTEGER) + CAST(substr(fastestLapTime, 7, 3) AS REAL) / 1000) AS average_fastest_lap_seconds\nFROM results r\nJOIN drivers d ON r.driverId = d.driverId\nWHERE d",
+          "sql_ok": false,
+          "sql_error": "OperationalError: no such column: d",
+          "row_count": null,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT AVG(CAST(substr(fastestLapTime, 1, 2) AS INTEGER) * 60 + CAST(substr(fastestLapTime, 4, 2) AS INTEGER) + CAST(substr(fastestLapTime, 7, 3) AS REAL) / 1000) AS average_fastest_lap_seconds\nFROM results r\nJOIN drivers d ON r.driverId = d.driverId\nWHERE d",
+          "sql_ok": false,
+          "sql_error": "OperationalError: no such column: d",
+          "row_count": null,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT AVG(CAST(substr(fastestLapTime, 1, 2) AS INTEGER) * 60 + CAST(substr(fastestLapTime, 4, 2) AS INTEGER) + CAST(substr(fastestLapTime, 7, 3) AS REAL) / 1000) AS average_fastest_lap_seconds\nFROM results r\nJOIN drivers d ON r.driverId = d.driverId\nWHERE d"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "missing column condition",
+          "result": "ERROR: OperationalError: no such column: d",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT AVG(CAST(substr(fastestLapTime, 1, 2) AS INTEGER) * 60 + CAST(substr(fastestLapTime, 4, 2) AS INTEGER) + CAST(substr(fastestLapTime, 7, 3) AS REAL) / 1000) AS average_fastest_lap_seconds\nFROM results r\nJOIN drivers d ON r.driverId = d.driverId\nWHERE d",
+          "issue": "missing column condition"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "missing column condition",
+          "result": "ERROR: OperationalError: no such column: d",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "From race no. 50 to 100, how many finishers have been disqualified?",
+      "db_id": "formula_1",
+      "gold_sql": "SELECT SUM(IIF(time IS NOT NULL, 1, 0)) FROM results WHERE statusId = 2 AND raceID < 100 AND raceId > 50",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.0951296640000692,
+      "agent_iterations": 2,
+      "final_sql": "SELECT COUNT(*) \nFROM results r\nJOIN status s ON r.statusId = s.statusId\nJOIN races race ON r.raceId = race.raceId\nWHERE race.round BETWEEN 50 AND 100\n  AND s.status = 'Disqualified';",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM results r\nJOIN status s ON r.statusId = s.statusId\nJOIN races race ON r.raceId = race.raceId\nWHERE race.round BETWEEN 50 AND 100\n  AND s.status = 'Disqualified';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT COUNT(*) \nFROM results r\nJOIN status s ON r.statusId = s.statusId\nJOIN races race ON r.raceId = race.raceId\nWHERE race.round BETWEEN 50 AND 100\n  AND s.status = 'Disqualified';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM results r\nJOIN status s ON r.statusId = s.statusId\nJOIN races race ON r.raceId = race.raceId\nWHERE race.round BETWEEN 50 AND 100\n  AND s.status = 'Disqualified';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Count is zero; revise coded values.",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n0",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT COUNT(*) \nFROM results r\nJOIN status s ON r.statusId = s.statusId\nJOIN races race ON r.raceId = race.raceId\nWHERE race.round BETWEEN 50 AND 100\n  AND s.status = 'Disqualified';",
+          "issue": "Count is zero; revise coded values."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Count is zero; revise coded values.",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n0",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        }
+      ]
+    },
+    {
+      "question": "Calculate the difference of the total amount spent in all events by the Student_Club in year 2019 and 2020.",
+      "db_id": "student_club",
+      "gold_sql": "SELECT SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2019' THEN T2.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2020' THEN T2.spent ELSE 0 END) AS num FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.4953605230002722,
+      "agent_iterations": 2,
+      "final_sql": "SELECT \n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2019') -\n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2020') AS difference;",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT \n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2020') -\n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2019') AS difference;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT \n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2019') -\n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2020') AS difference;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT \n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2020') -\n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2019') AS difference;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Compute 2019 minus 2020.",
+          "result": "OK: 1 rows.\nCOLUMNS: difference\nFIRST ROWS:\n-2086.05",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT \n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2019') -\n  (SELECT SUM(b.spent) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE substr(e.event_date, 1, 4) = '2020') AS difference;",
+          "issue": "Compute 2019 minus 2020."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: difference\nFIRST ROWS:\n2086.05",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "What is the complete address of the school with the lowest excellence rate? Indicate the Street, City, Zip and State.",
+      "db_id": "california_schools",
+      "gold_sql": "SELECT T2.Street, T2.City, T2.State, T2.Zip FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY CAST(T1.NumGE1500 AS REAL) / T1.NumTstTakr ASC LIMIT 1",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.6944633540001632,
+      "agent_iterations": 1,
+      "final_sql": "SELECT s.Street, s.City, s.Zip, s.State\nFROM schools s\nJOIN satscores ss ON s.CDSCode = ss.cds\nORDER BY (ss.NumGE1500 * 1.0 / ss.NumTstTakr) ASC\nLIMIT 1;",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT s.Street, s.City, s.Zip, s.State\nFROM schools s\nJOIN satscores ss ON s.CDSCode = ss.cds\nORDER BY (ss.NumGE1500 * 1.0 / ss.NumTstTakr) ASC\nLIMIT 1;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT s.Street, s.City, s.Zip, s.State\nFROM schools s\nJOIN satscores ss ON s.CDSCode = ss.cds\nORDER BY (ss.NumGE1500 * 1.0 / ss.NumTstTakr) ASC\nLIMIT 1;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: Street, City, Zip, State\nFIRST ROWS:\n1111 Van Ness Avenue | Fresno | 93721-2002 | CA",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Calculate the percentage of carcinogenic molecules which contain the Chlorine element.",
+      "db_id": "toxicology",
+      "gold_sql": "SELECT COUNT(CASE WHEN T2.label = '+' AND T1.element = 'cl' THEN T2.molecule_id ELSE NULL END) * 100 / COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.5292554379998364,
+      "agent_iterations": 1,
+      "final_sql": "SELECT \n  CAST(COUNT(CASE WHEN a.element = 'cl' THEN 1 END) AS FLOAT) * 100 / COUNT(*) AS percentage\nFROM molecule m\nJOIN atom a ON m.molecule_id = a.molecule_id\nWHERE m.label = '+';",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT \n  CAST(COUNT(CASE WHEN a.element = 'cl' THEN 1 END) AS FLOAT) * 100 / COUNT(*) AS percentage\nFROM molecule m\nJOIN atom a ON m.molecule_id = a.molecule_id\nWHERE m.label = '+';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT \n  CAST(COUNT(CASE WHEN a.element = 'cl' THEN 1 END) AS FLOAT) * 100 / COUNT(*) AS percentage\nFROM molecule m\nJOIN atom a ON m.molecule_id = a.molecule_id\nWHERE m.label = '+';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: percentage\nFIRST ROWS:\n3.1419284940411703",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "How many users received commentator badges in 2014?",
+      "db_id": "codebase_community",
+      "gold_sql": "SELECT COUNT(Id) FROM badges WHERE Name = 'Commentator' AND STRFTIME('%Y', Date) = '2014'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.967627567999898,
+      "agent_iterations": 1,
+      "final_sql": "SELECT COUNT(*) \nFROM badges \nWHERE Name = 'Commentator' \n  AND strftime('%Y', Date) = '2014';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM badges \nWHERE Name = 'Commentator' \n  AND strftime('%Y', Date) = '2014';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM badges \nWHERE Name = 'Commentator' \n  AND strftime('%Y', Date) = '2014';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n544",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Among the patients with a normal Ig G level, how many of them have symptoms?",
+      "db_id": "thrombosis_prediction",
+      "gold_sql": "SELECT COUNT(T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG BETWEEN 900 AND 2000 AND T3.Symptoms IS NOT NULL",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.2057891219997146,
+      "agent_iterations": 2,
+      "final_sql": "SELECT COUNT(*) \nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE l.\"IGG\" IS NOT NULL AND l.\"IGG\" >= 0 AND l.\"IGG\" <= 100\n  AND p.\"Diagnosis\" IS NOT NULL AND p.\"Diagnosis\" != '';",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM \"Patient\" p\nJOIN \"Examination\" e ON p.\"ID\" = e.\"ID\"\nWHERE e.\"aCL IgG\" IS NOT NULL AND e.\"aCL IgG\" >= 0 AND e.\"aCL IgG\" <= 100\n  AND e.\"Symptoms\" IS NOT NULL AND e.\"Symptoms\" != '';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT COUNT(*) \nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE l.\"IGG\" IS NOT NULL AND l.\"IGG\" >= 0 AND l.\"IGG\" <= 100\n  AND p.\"Diagnosis\" IS NOT NULL AND p.\"Diagnosis\" != '';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM \"Patient\" p\nJOIN \"Examination\" e ON p.\"ID\" = e.\"ID\"\nWHERE e.\"aCL IgG\" IS NOT NULL AND e.\"aCL IgG\" >= 0 AND e.\"aCL IgG\" <= 100\n  AND e.\"Symptoms\" IS NOT NULL AND e.\"Symptoms\" != '';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Use Laboratory.IGG.",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n7",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT COUNT(*) \nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE l.\"IGG\" IS NOT NULL AND l.\"IGG\" >= 0 AND l.\"IGG\" <= 100\n  AND p.\"Diagnosis\" IS NOT NULL AND p.\"Diagnosis\" != '';",
+          "issue": "Use Laboratory.IGG."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n3",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "How many superheroes have the super power of \"Super Strength\"?",
+      "db_id": "superhero",
+      "gold_sql": "SELECT COUNT(T1.hero_id) FROM hero_power AS T1 INNER JOIN superpower AS T2 ON T1.power_id = T2.id WHERE T2.power_name = 'Super Strength'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.4621650399999453,
+      "agent_iterations": 1,
+      "final_sql": "SELECT COUNT(*) \nFROM superhero s\nJOIN hero_power hp ON s.id = hp.hero_id\nJOIN superpower p ON hp.power_id = p.id\nWHERE p.power_name = 'Super Strength';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM superhero s\nJOIN hero_power hp ON s.id = hp.hero_id\nJOIN superpower p ON hp.power_id = p.id\nWHERE p.power_name = 'Super Strength';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM superhero s\nJOIN hero_power hp ON s.id = hp.hero_id\nJOIN superpower p ON hp.power_id = p.id\nWHERE p.power_name = 'Super Strength';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n358",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Please list the name of the cards in the set Coldsnap with the highest converted mana cost.",
+      "db_id": "card_games",
+      "gold_sql": "SELECT T1.name FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap' ORDER BY T1.convertedManaCost DESC LIMIT 1",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.6295768919999318,
+      "agent_iterations": 1,
+      "final_sql": "SELECT c.name\nFROM cards c\nJOIN sets s ON c.setCode = s.code\nWHERE s.name = 'Coldsnap'\nORDER BY c.convertedManaCost DESC\nLIMIT 1;",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT c.name\nFROM cards c\nJOIN sets s ON c.setCode = s.code\nWHERE s.name = 'Coldsnap'\nORDER BY c.convertedManaCost DESC\nLIMIT 1;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT c.name\nFROM cards c\nJOIN sets s ON c.setCode = s.code\nWHERE s.name = 'Coldsnap'\nORDER BY c.convertedManaCost DESC\nLIMIT 1;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: name\nFIRST ROWS:\nSunscour",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": true,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "For all patients with normal uric acid (UA), what is the average UA index based on their latest laboratory examination result?",
+      "db_id": "thrombosis_prediction",
+      "gold_sql": "SELECT AVG(T2.UA) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE (T2.UA < 6.5 AND T1.SEX = 'F') OR (T2.UA < 8.0 AND T1.SEX = 'M') AND T2.Date = ( SELECT MAX(Date) FROM Laboratory )",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 2.2279385219999313,
+      "agent_iterations": 3,
+      "final_sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND l",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  );",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND l",
+          "sql_ok": false,
+          "sql_error": "OperationalError: incomplete input",
+          "row_count": null,
+          "correct": false
+        },
+        {
+          "iteration": 2,
+          "source": "revise",
+          "sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND l",
+          "sql_ok": false,
+          "sql_error": "OperationalError: incomplete input",
+          "row_count": null,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  );"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Normal UA depends on sex.",
+          "result": "OK: 1 rows.\nCOLUMNS: Average UA\nFIRST ROWS:\n4.414229249011857",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND l",
+          "issue": "Normal UA depends on sex."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Unclosed parenthesis",
+          "result": "ERROR: SQLValidationError: parse failed: Expecting ). Line 11, Col: 24.\n  X(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND \u001b[4ml\u001b[0m",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT AVG(l.\"UA\") AS \"Average UA\"\nFROM \"Laboratory\" l\nJOIN \"Patient\" p ON l.\"ID\" = p.\"ID\"\nWHERE l.\"UA\" IS NOT NULL\n  AND l.\"Date\" = (\n    SELECT MAX(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND l",
+          "issue": "Unclosed parenthesis"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Missing closing parenthesis",
+          "result": "ERROR: SQLValidationError: parse failed: Expecting ). Line 11, Col: 24.\n  X(l2.\"Date\")\n    FROM \"Laboratory\" l2\n    WHERE l2.\"ID\" = l.\"ID\"\n  )\n  AND (\n    (p.\"SEX\" = 'M' AND \u001b[4ml\u001b[0m",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "User No.23853 gave a comment to a post at 9:08:18 on 2013/7/12, was that post well-finished?",
+      "db_id": "codebase_community",
+      "gold_sql": "SELECT IIF(T2.ClosedDate IS NULL, 'NOT well-finished', 'well-finished') AS resylt FROM comments AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id WHERE T1.UserId = 23853 AND T1.CreationDate = '2013-07-12 09:08:18.0'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 3.9783131630001662,
+      "agent_iterations": 2,
+      "final_sql": "SELECT \n  CASE \n    WHEN p.ClosedDate IS NOT NULL THEN 'Yes' \n    ELSE 'No' \n  END AS well_finished\nFROM posts p\nJOIN comments c ON p.Id = c.PostId\nWHERE c.UserId = 23853\n  AND c.CreationDate = '2013-07-12 09:08:18.0';",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT p.PostTypeId, p.CreaionDate, p.LasActivityDate, p.ClosedDate\nFROM posts p\nJOIN comments c ON p.Id = c.PostId\nWHERE c.UserId = 23853\n  AND c.CreationDate = '2013-07-12 09:08:18';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 0,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT \n  CASE \n    WHEN p.ClosedDate IS NOT NULL THEN 'Yes' \n    ELSE 'No' \n  END AS well_finished\nFROM posts p\nJOIN comments c ON p.Id = c.PostId\nWHERE c.UserId = 23853\n  AND c.CreationDate = '2013-07-12 09:08:18.0';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT p.PostTypeId, p.CreaionDate, p.LasActivityDate, p.ClosedDate\nFROM posts p\nJOIN comments c ON p.Id = c.PostId\nWHERE c.UserId = 23853\n  AND c.CreationDate = '2013-07-12 09:08:18';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Return well-finished label.",
+          "result": "OK: 0 rows returned.",
+          "parse_fallback": false,
+          "zero_row_normalized": true,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT \n  CASE \n    WHEN p.ClosedDate IS NOT NULL THEN 'Yes' \n    ELSE 'No' \n  END AS well_finished\nFROM posts p\nJOIN comments c ON p.Id = c.PostId\nWHERE c.UserId = 23853\n  AND c.CreationDate = '2013-07-12 09:08:18.0';",
+          "issue": "Return well-finished label."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: well_finished\nFIRST ROWS:\nYes",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "How many members of Business have the Medium size of tee shirt?",
+      "db_id": "student_club",
+      "gold_sql": "SELECT COUNT(T2.member_id) FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major WHERE T1.major_name = 'Business' AND T2.t_shirt_size = 'Medium'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.460700898000141,
+      "agent_iterations": 1,
+      "final_sql": "SELECT COUNT(*) \nFROM member m\nJOIN major maj ON m.link_to_major = maj.major_id\nWHERE maj.major_name = 'Business' \n  AND m.t_shirt_size = 'Medium';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM member m\nJOIN major maj ON m.link_to_major = maj.major_id\nWHERE maj.major_name = 'Business' \n  AND m.t_shirt_size = 'Medium';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM member m\nJOIN major maj ON m.link_to_major = maj.major_id\nWHERE maj.major_name = 'Business' \n  AND m.t_shirt_size = 'Medium';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n1",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "What is the type of the card \"Ancestor's Chosen\" as originally printed?",
+      "db_id": "card_games",
+      "gold_sql": "SELECT originalType FROM cards WHERE name = 'Ancestor''s Chosen' AND originalType IS NOT NULL",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 3.034288752000066,
+      "agent_iterations": 2,
+      "final_sql": "SELECT originalType\nFROM cards\nWHERE name = 'Ancestor''s Chosen'\n  AND originalType IS NOT NULL;",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT originalType\nFROM cards\nWHERE name = 'Ancestor''s Chosen';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 4,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT originalType\nFROM cards\nWHERE name = 'Ancestor''s Chosen'\n  AND originalType IS NOT NULL;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 3,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT originalType\nFROM cards\nWHERE name = 'Ancestor''s Chosen';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Filter originalType IS NOT NULL.",
+          "result": "OK: 4 rows.\nCOLUMNS: originalType\nFIRST ROWS:\nCreature - Human Cleric\nNone\nCreature - Cleric\n... (1 more rows)",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": true,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT originalType\nFROM cards\nWHERE name = 'Ancestor''s Chosen'\n  AND originalType IS NOT NULL;",
+          "issue": "Filter originalType IS NOT NULL."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 3 rows.\nCOLUMNS: originalType\nFIRST ROWS:\nCreature - Human Cleric\nCreature - Cleric\nCreature \u2014 Human Cleric",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": true,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Which active district has the highest average score in Reading?",
+      "db_id": "california_schools",
+      "gold_sql": "SELECT T1.District FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.StatusType = 'Active' ORDER BY T2.AvgScrRead DESC LIMIT 1",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.5922111559998484,
+      "agent_iterations": 1,
+      "final_sql": "SELECT s.District\nFROM schools s\nJOIN satscores ss ON s.CDSCode = ss.cds\nWHERE s.StatusType = 'Active'\nORDER BY ss.AvgScrRead DESC\nLIMIT 1;",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT s.District\nFROM schools s\nJOIN satscores ss ON s.CDSCode = ss.cds\nWHERE s.StatusType = 'Active'\nORDER BY ss.AvgScrRead DESC\nLIMIT 1;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT s.District\nFROM schools s\nJOIN satscores ss ON s.CDSCode = ss.cds\nWHERE s.StatusType = 'Active'\nORDER BY ss.AvgScrRead DESC\nLIMIT 1;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: District\nFIRST ROWS:\nPalo Alto Unified",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Please provide the IDs of the 3 female clients with the largest loans.",
+      "db_id": "financial",
+      "gold_sql": "SELECT T1.client_id FROM client AS T1 INNER JOIN disp AS T4 on T1.client_id= T4.client_id INNER JOIN account AS T2 ON T4.account_id = T2.account_id  INNER JOIN loan AS T3 ON T2.account_id = T3.account_id and T4.account_id = T3.account_id WHERE T1.gender = 'F' ORDER BY T3.amount DESC LIMIT 3",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.49521755699970527,
+      "agent_iterations": 1,
+      "final_sql": "SELECT c.client_id\nFROM client c\nJOIN disp d ON c.client_id = d.client_id\nJOIN loan l ON d.account_id = l.account_id\nWHERE c.gender = 'F'\nORDER BY l.amount DESC\nLIMIT 3;",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT c.client_id\nFROM client c\nJOIN disp d ON c.client_id = d.client_id\nJOIN loan l ON d.account_id = l.account_id\nWHERE c.gender = 'F'\nORDER BY l.amount DESC\nLIMIT 3;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 3,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT c.client_id\nFROM client c\nJOIN disp d ON c.client_id = d.client_id\nJOIN loan l ON d.account_id = l.account_id\nWHERE c.gender = 'F'\nORDER BY l.amount DESC\nLIMIT 3;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 3 rows.\nCOLUMNS: client_id\nFIRST ROWS:\n10997\n2823\n8506",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Among all the lap records set on various circuits, what is the time for the fastest one?",
+      "db_id": "formula_1",
+      "gold_sql": "SELECT time FROM lapTimes ORDER BY (CASE WHEN INSTR(time, ':') <> INSTR(SUBSTR(time, INSTR(time, ':') + 1), ':') + INSTR(time, ':') THEN CAST(SUBSTR(time, 1, INSTR(time, ':') - 1) AS REAL) * 3600 ELSE 0 END) + (CAST(SUBSTR(time, INSTR(time, ':') - 2 * (INSTR(time, ':') = INSTR(SUBSTR(time, INSTR(time, ':') + 1), ':') + INSTR(time, ':')), INSTR(time, ':') - 1) AS REAL) * 60) + (CAST(SUBSTR(time, INSTR(time, ':') + 1, INSTR(time, '.') - INSTR(time, ':') - 1) AS REAL)) + (CAST(SUBSTR(time, INSTR(time, '.') + 1) AS REAL) / 1000) ASC LIMIT 1",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.7741487250000318,
+      "agent_iterations": 2,
+      "final_sql": "SELECT time\nFROM lapTimes\nWHERE milliseconds = (SELECT MIN(milliseconds) FROM lapTimes WHERE milliseconds IS NOT NULL)\n  AND time IS NOT NULL\nLIMIT 1;",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT MIN(milliseconds) AS fastest_lap_time\nFROM lapTimes\nWHERE milliseconds IS NOT NULL;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT time\nFROM lapTimes\nWHERE milliseconds = (SELECT MIN(milliseconds) FROM lapTimes WHERE milliseconds IS NOT NULL)\n  AND time IS NOT NULL\nLIMIT 1;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT MIN(milliseconds) AS fastest_lap_time\nFROM lapTimes\nWHERE milliseconds IS NOT NULL;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Return time text, not milliseconds.",
+          "result": "OK: 1 rows.\nCOLUMNS: fastest_lap_time\nFIRST ROWS:\n67411",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT time\nFROM lapTimes\nWHERE milliseconds = (SELECT MIN(milliseconds) FROM lapTimes WHERE milliseconds IS NOT NULL)\n  AND time IS NOT NULL\nLIMIT 1;",
+          "issue": "Return time text, not milliseconds."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: time\nFIRST ROWS:\n1:07.411",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "In superheroes with missing weight data, calculate the difference between the number of superheroes with blue eyes and no eye color.",
+      "db_id": "superhero",
+      "gold_sql": "SELECT SUM(CASE WHEN T2.id = 7 THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.id = 1 THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id WHERE T1.weight_kg = 0 OR T1.weight_kg is NULL",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.2324777620001441,
+      "agent_iterations": 2,
+      "final_sql": "SELECT \n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NOT NULL AND eye_colour_id IN (SELECT id FROM colour WHERE colour = 'Blue') AND (weight_kg IS NULL OR weight_kg = 0)) -\n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NULL AND (weight_kg IS NULL OR weight_kg = 0)) AS difference;",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT \n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NOT NULL AND eye_colour_id IN (SELECT id FROM colour WHERE colour = 'Blue') AND weight_kg IS NULL) -\n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NULL AND weight_kg IS NULL) AS difference;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT \n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NOT NULL AND eye_colour_id IN (SELECT id FROM colour WHERE colour = 'Blue') AND (weight_kg IS NULL OR weight_kg = 0)) -\n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NULL AND (weight_kg IS NULL OR weight_kg = 0)) AS difference;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT \n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NOT NULL AND eye_colour_id IN (SELECT id FROM colour WHERE colour = 'Blue') AND weight_kg IS NULL) -\n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NULL AND weight_kg IS NULL) AS difference;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Missing weight includes 0.",
+          "result": "OK: 1 rows.\nCOLUMNS: difference\nFIRST ROWS:\n1",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT \n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NOT NULL AND eye_colour_id IN (SELECT id FROM colour WHERE colour = 'Blue') AND (weight_kg IS NULL OR weight_kg = 0)) -\n  (SELECT COUNT(*) FROM superhero WHERE eye_colour_id IS NULL AND (weight_kg IS NULL OR weight_kg = 0)) AS difference;",
+          "issue": "Missing weight includes 0."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: difference\nFIRST ROWS:\n26",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "In the College of Agriculture and Applied Sciences, how many majors are under the department of School of Applied Sciences, Technology and Education?",
+      "db_id": "student_club",
+      "gold_sql": "SELECT COUNT(major_id) FROM major WHERE department = 'School of Applied Sciences, Technology and Education' AND college = 'College of Agriculture and Applied Sciences'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.4303263709998646,
+      "agent_iterations": 1,
+      "final_sql": "SELECT COUNT(*) \nFROM major \nWHERE college = 'College of Agriculture and Applied Sciences' \n  AND department = 'School of Applied Sciences, Technology and Education';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM major \nWHERE college = 'College of Agriculture and Applied Sciences' \n  AND department = 'School of Applied Sciences, Technology and Education';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT COUNT(*) \nFROM major \nWHERE college = 'College of Agriculture and Applied Sciences' \n  AND department = 'School of Applied Sciences, Technology and Education';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: COUNT(*)\nFIRST ROWS:\n21",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Mention the display name and location of the user who owned the excerpt post with hypothesis-testing tag.",
+      "db_id": "codebase_community",
+      "gold_sql": "SELECT T3.DisplayName, T3.Location FROM tags AS T1 INNER JOIN posts AS T2 ON T1.ExcerptPostId = T2.Id INNER JOIN users AS T3 ON T3.Id = T2.OwnerUserId WHERE T1.TagName = 'hypothesis-testing'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.158392172999811,
+      "agent_iterations": 1,
+      "final_sql": "SELECT u.DisplayName, u.Location\nFROM users u\nJOIN posts p ON u.Id = p.OwnerUserId\nJOIN tags t ON p.Id = t.ExcerptPostId\nWHERE t.TagName = 'hypothesis-testing';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT u.DisplayName, u.Location\nFROM users u\nJOIN posts p ON u.Id = p.OwnerUserId\nJOIN tags t ON p.Id = t.ExcerptPostId\nWHERE t.TagName = 'hypothesis-testing';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT u.DisplayName, u.Location\nFROM users u\nJOIN posts p ON u.Id = p.OwnerUserId\nJOIN tags t ON p.Id = t.ExcerptPostId\nWHERE t.TagName = 'hypothesis-testing';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: DisplayName, Location\nFIRST ROWS:\nmbq | Warsaw, Poland",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "List all patients who were followed up at the outpatient clinic who underwent a laboratory test in October 1991 and had a total blood bilirubin level within the normal range.",
+      "db_id": "thrombosis_prediction",
+      "gold_sql": "SELECT DISTINCT T1.ID FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Admission = '-' AND T2.`T-BIL` < 2.0 AND T2.Date LIKE '1991-10-%'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.5583976469997651,
+      "agent_iterations": 2,
+      "final_sql": "SELECT DISTINCT p.\"ID\"\nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE p.\"Admission\" = '-'\n  AND l.\"Date\" >= '1991-10-01'\n  AND l.\"Date\" < '1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BIL",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT DISTINCT p.\"ID\"\nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE p.\"Admission\" = '-'\n  AND l.\"Date\" >= '1991-10-01'\n  AND l.\"Date\" < '1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BIL",
+          "sql_ok": false,
+          "sql_error": "OperationalError: unrecognized token: \"\"T-BIL\"",
+          "row_count": null,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT DISTINCT p.\"ID\"\nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE p.\"Admission\" = '-'\n  AND l.\"Date\" >= '1991-10-01'\n  AND l.\"Date\" < '1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BIL",
+          "sql_ok": false,
+          "sql_error": "OperationalError: unrecognized token: \"\"T-BIL\"",
+          "row_count": null,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT DISTINCT p.\"ID\"\nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE p.\"Admission\" = '-'\n  AND l.\"Date\" >= '1991-10-01'\n  AND l.\"Date\" < '1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BIL"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Incomplete column name",
+          "result": "ERROR: TokenError: Error tokenizing ''1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BI'",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT DISTINCT p.\"ID\"\nFROM \"Patient\" p\nJOIN \"Laboratory\" l ON p.\"ID\" = l.\"ID\"\nWHERE p.\"Admission\" = '-'\n  AND l.\"Date\" >= '1991-10-01'\n  AND l.\"Date\" < '1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BIL",
+          "issue": "Incomplete column name"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Incomplete column name",
+          "result": "ERROR: TokenError: Error tokenizing ''1991-11-01'\n  AND l.\"T-BIL\" >= 0.2\n  AND l.\"T-BI'",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Among the molecules with element Calcium, are they mostly carcinogenic or non carcinogenic?",
+      "db_id": "toxicology",
+      "gold_sql": "SELECT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'ca' GROUP BY T2.label ORDER BY COUNT(T2.label) DESC LIMIT 1",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.6778283239996199,
+      "agent_iterations": 1,
+      "final_sql": "SELECT \n  CASE \n    WHEN SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) > SUM(CASE WHEN m.label = '-' THEN 1 ELSE 0 END) THEN 'carcinogenic'\n    ELSE 'non carcinogenic'\n  END AS result\nFROM molecule m\nJOIN atom a ON m.molecule_id = a.molecule_id\nWHERE a.element = 'ca';",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT \n  CASE \n    WHEN SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) > SUM(CASE WHEN m.label = '-' THEN 1 ELSE 0 END) THEN 'carcinogenic'\n    ELSE 'non carcinogenic'\n  END AS result\nFROM molecule m\nJOIN atom a ON m.molecule_id = a.molecule_id\nWHERE a.element = 'ca';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT \n  CASE \n    WHEN SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) > SUM(CASE WHEN m.label = '-' THEN 1 ELSE 0 END) THEN 'carcinogenic'\n    ELSE 'non carcinogenic'\n  END AS result\nFROM molecule m\nJOIN atom a ON m.molecule_id = a.molecule_id\nWHERE a.element = 'ca';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: result\nFIRST ROWS:\nnon carcinogenic",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Please list the full names of the students in the Student_Club that come from the Art and Design Department.",
+      "db_id": "student_club",
+      "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T2.department = 'Art and Design Department'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.43908566200025234,
+      "agent_iterations": 1,
+      "final_sql": "SELECT m.first_name, m.last_name\nFROM member m\nJOIN major maj ON m.link_to_major = maj.major_id\nWHERE maj.department = 'Art and Design Department';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT m.first_name, m.last_name\nFROM member m\nJOIN major maj ON m.link_to_major = maj.major_id\nWHERE maj.department = 'Art and Design Department';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT m.first_name, m.last_name\nFROM member m\nJOIN major maj ON m.link_to_major = maj.major_id\nWHERE maj.department = 'Art and Design Department';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: first_name, last_name\nFIRST ROWS:\nAmy | Firth",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "List all the mythic rarity print cards banned in gladiator format.",
+      "db_id": "card_games",
+      "gold_sql": "SELECT DISTINCT T1.id FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.format = 'gladiator' AND T2.status = 'Banned' AND T1.rarity = 'mythic'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 0.6414648269997087,
+      "agent_iterations": 1,
+      "final_sql": "SELECT c.name\nFROM cards c\nJOIN legalities l ON c.uuid = l.uuid\nWHERE c.rarity = 'mythic'\n  AND l.format = 'gladiator'\n  AND l.status = 'Banned';",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT c.name\nFROM cards c\nJOIN legalities l ON c.uuid = l.uuid\nWHERE c.rarity = 'mythic'\n  AND l.format = 'gladiator'\n  AND l.status = 'Banned';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 5,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT c.name\nFROM cards c\nJOIN legalities l ON c.uuid = l.uuid\nWHERE c.rarity = 'mythic'\n  AND l.format = 'gladiator'\n  AND l.status = 'Banned';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 5 rows.\nCOLUMNS: name\nFIRST ROWS:\nOko, Thief of Crowns\nOko, Thief of Crowns\nNexus of Fate\n... (2 more rows)",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": true,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Among posts by Harvey Motulsky and Noah Snyder, which one has higher popularity?",
+      "db_id": "codebase_community",
+      "gold_sql": "SELECT T1.DisplayName FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T2.PostId = T3.Id WHERE T1.DisplayName = 'Harvey Motulsky' OR T1.DisplayName = 'Noah Snyder' GROUP BY T1.DisplayName ORDER BY SUM(T3.ViewCount) DESC LIMIT 1",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 1.8898756379999213,
+      "agent_iterations": 2,
+      "final_sql": "SELECT u.DisplayName, p.Id, p.Title, p.Score, p.ViewCount\nFROM posts p\nJOIN users u ON p.OwnerUserId = u.Id\nWHERE u.DisplayName IN ('Harvey Motulsky', 'Noah Snyder')\nORDER BY p.ViewCount DESC, p.Score DESC\nLIMIT 1;",
+      "final_correct": false,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT p.Id, p.Title, p.Score, p.ViewCount\nFROM posts p\nJOIN users u ON p.OwnerUserId = u.Id\nWHERE u.DisplayName IN ('Harvey Motulsky', 'Noah Snyder')\nORDER BY p.ViewCount DESC, p.Score DESC\nLIMIT 1;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        },
+        {
+          "iteration": 1,
+          "source": "revise",
+          "sql": "SELECT u.DisplayName, p.Id, p.Title, p.Score, p.ViewCount\nFROM posts p\nJOIN users u ON p.OwnerUserId = u.Id\nWHERE u.DisplayName IN ('Harvey Motulsky', 'Noah Snyder')\nORDER BY p.ViewCount DESC, p.Score DESC\nLIMIT 1;",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 1,
+          "correct": false
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT p.Id, p.Title, p.Score, p.ViewCount\nFROM posts p\nJOIN users u ON p.OwnerUserId = u.Id\nWHERE u.DisplayName IN ('Harvey Motulsky', 'Noah Snyder')\nORDER BY p.ViewCount DESC, p.Score DESC\nLIMIT 1;"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": false,
+          "issue": "Return the higher user name.",
+          "result": "OK: 1 rows.\nCOLUMNS: Id, Title, Score, ViewCount\nFIRST ROWS:\n109 | Power of Holm's multiple comparison testing compared to others | 2 | 3980",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": true
+        },
+        {
+          "node": "revise",
+          "sql": "SELECT u.DisplayName, p.Id, p.Title, p.Score, p.ViewCount\nFROM posts p\nJOIN users u ON p.OwnerUserId = u.Id\nWHERE u.DisplayName IN ('Harvey Motulsky', 'Noah Snyder')\nORDER BY p.ViewCount DESC, p.Score DESC\nLIMIT 1;",
+          "issue": "Return the higher user name."
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 1 rows.\nCOLUMNS: DisplayName, Id, Title, Score, ViewCount\nFIRST ROWS:\nHarvey Motulsky | 109 | Power of Holm's multiple comparison testing compared to others | 2 | 3980",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    },
+    {
+      "question": "Mention the reputation of users who had obtained the badge on 7/19/2010 7:39:08 PM.",
+      "db_id": "codebase_community",
+      "gold_sql": "SELECT T1.Reputation FROM users AS T1 INNER JOIN badges AS T2 ON T1.Id = T2.UserId WHERE T2.Date = '2010-07-19 19:39:08.0'",
+      "gold_sql_ok": true,
+      "gold_sql_error": null,
+      "agent_error": null,
+      "agent_latency_seconds": 2.188901590000114,
+      "agent_iterations": 1,
+      "final_sql": "SELECT u.Reputation\nFROM users u\nJOIN badges b ON u.Id = b.UserId\nWHERE b.Date = '2010-07-19 19:39:08.0';",
+      "final_correct": true,
+      "attempts": [
+        {
+          "iteration": 0,
+          "source": "generate_sql",
+          "sql": "SELECT u.Reputation\nFROM users u\nJOIN badges b ON u.Id = b.UserId\nWHERE b.Date = '2010-07-19 19:39:08.0';",
+          "sql_ok": true,
+          "sql_error": null,
+          "row_count": 13,
+          "correct": true
+        }
+      ],
+      "history": [
+        {
+          "node": "generate_sql",
+          "sql": "SELECT u.Reputation\nFROM users u\nJOIN badges b ON u.Id = b.UserId\nWHERE b.Date = '2010-07-19 19:39:08.0';"
+        },
+        {
+          "node": "verify",
+          "method": "llm",
+          "ok": true,
+          "issue": "",
+          "result": "OK: 13 rows.\nCOLUMNS: Reputation\nFIRST ROWS:\n817\n128\n308\n... (10 more rows)",
+          "parse_fallback": false,
+          "zero_row_normalized": false,
+          "speculative_issue_normalized": false,
+          "heuristic_reject": false
+        }
+      ]
+    }
+  ]
+}

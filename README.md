@@ -1,67 +1,118 @@
-# Home assignment: LLM inference + o11y
+# Text-to-SQL on One H100
 
-  
+Local inference, agentic repair, observability, evals, and SLO tuning for a
+small internal analytics proof of concept.
 
-## Legend
+[![Python](https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=white)](pyproject.toml)
+[![vLLM](https://img.shields.io/badge/serving-vLLM-5B8DEF)](https://github.com/vllm-project/vllm)
+[![LangGraph](https://img.shields.io/badge/agent-LangGraph-1C3C3C)](https://github.com/langchain-ai/langgraph)
+[![Langfuse](https://img.shields.io/badge/tracing-Langfuse-F97316)](https://github.com/langfuse/langfuse)
+[![Grafana](https://img.shields.io/badge/o11y-Grafana-F46800?logo=grafana&logoColor=white)](https://github.com/grafana/grafana)
+[![Prometheus](https://img.shields.io/badge/metrics-Prometheus-E6522C?logo=prometheus&logoColor=white)](https://github.com/prometheus/prometheus)
 
-Imagine you're responsible for the LLM part of an internal analytics product (aka talk-to-your-data-for-those-with-sensitive-data). You need to show a text-to-SQL PoC for a trivial workflow:
-1. analysts ask questions in English
-2. the system runs SQL against an internal warehouse and returns rows. 
+This repo implements the assignment in [TASK.md](TASK.md): serve
+`Qwen/Qwen3-30B-A3B-Instruct-2507` with vLLM on a single H100, put a
+LangGraph text-to-SQL agent on top, trace it with Langfuse, watch the serving
+layer in Grafana, evaluate execution accuracy on a BIRD subset, and tune for a
+5 second p95 latency SLO at 10+ full-agent RPS.
 
-You're to present it to technical leadership and they'll buy it if they see the whole system running with [Qwen3-30B-A3B](https://huggingface.co/collections/Qwen/qwen3) against [BIRD-bench](https://bird-bench.github.io/) showing some decent quality and performance.
+The final writeup is [REPORT.md](REPORT.md). The final deliverables archive is:
 
-All in all you need to do two things:
-- Setup inference infra (aka vLLM and Prometheus + Grafana are your friends). 
-- Put an agent on top of that infra (aka LangGraph and Langfuse are your friends). The purpose of agent is to boost quality of system's responses.
-  
-The endpoint will run on one H100, ain't much but honest hardware.
+```bash
+./scripts/run-full-project.sh package
+```
 
-![Farmer](https://cloudfront-us-east-1.images.arcpublishing.com/gray/FLBGRRRDQNHYBNTNHU4WOWRIFY.png)
+```text
+submission/mlops-assignment-submission.zip
+```
 
-Disclaimer:
-You don't need to set up Kubernetes, build a frontend or productionize past the toy-infra level. The point of the whole assignment is to learn what each layer tells you.
+## Results
 
----
+| Area | Final evidence |
+|---|---|
+| Model | `Qwen/Qwen3-30B-A3B-Instruct-2507` on 1x H100 80GB |
+| Baseline eval | 16/30 correct, 53.3% execution accuracy |
+| Post-SLO eval | 14/30 correct, 46.7% execution accuracy |
+| Agent value | Baseline improves from 13/30 at iteration 0 to 16/30 after revision |
+| Final load | 10.45 actual RPS for 300s, 3150/3150 ok |
+| Final latency | p50 1.20s, p95 3.97s, p99 5.77s |
+| Verdict | SLO hit, with an explicit quality tradeoff |
 
-## Answering your why shall I even cares
+## Evidence Gallery
 
-By the end of the assignment you should be able to:
+<table>
+  <tr>
+    <td width="50%">
+      <a href="screenshots/vllm_manual_query.png">
+        <img src="screenshots/vllm_manual_query.png" alt="vLLM manual SQL query evidence" width="100%">
+      </a>
+      <br><strong>vLLM manual SQL query</strong>
+    </td>
+    <td width="50%">
+      <a href="screenshots/grafana_serving.png">
+        <img src="screenshots/grafana_serving.png" alt="Grafana serving dashboard" width="100%">
+      </a>
+      <br><strong>Serving dashboard under load</strong>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <a href="screenshots/langfuse_trace.png">
+        <img src="screenshots/langfuse_trace.png" alt="Langfuse trace waterfall" width="100%">
+      </a>
+      <br><strong>Langfuse trace waterfall</strong>
+    </td>
+    <td width="50%">
+      <a href="screenshots/grafana_after.png">
+        <img src="screenshots/grafana_after.png" alt="Grafana after SLO tuning" width="100%">
+      </a>
+      <br><strong>After tuning: p95 under target</strong>
+    </td>
+  </tr>
+</table>
 
-- Deploy an open-source MoE LLM with vLLM and make an informed inference config decision.
-- Read vLLM's `/metrics` and build a Grafana dashboard that tells you what your serving layer is doing right now.
-- Build a multi-step agent in LangGraph where the architecture itself adds measurable value.
-- Use Langfuse to inspect agent traces and explain why one request was slow when another wasn't.
-- Build an offline eval system that separates capability regression from latency improvement.
-- Combine both observability layers to find and fix a bottleneck, then prove you fixed it without breaking quality.
+## Architecture
 
-If done with curiosity, this assignment will bring you tons of knowledge about how things work which is invaluable. 
+```mermaid
+flowchart LR
+    user[Analyst question] --> api[FastAPI agent<br/>localhost:8001]
+    api --> graph[LangGraph<br/>generate -> execute -> verify -> revise]
+    graph --> sqlite[(BIRD SQLite DBs)]
+    graph --> vllm[vLLM OpenAI-compatible API<br/>localhost:8000]
+    vllm --> qwen[Qwen3-30B-A3B-Instruct-2507<br/>1x H100]
+    vllm --> prom[Prometheus scrape<br/>localhost:9090]
+    prom --> grafana[Grafana dashboard<br/>localhost:3000]
+    graph --> langfuse[Langfuse traces<br/>localhost:3001]
+```
 
----
+Runtime ports:
 
-## Prerequisites
+| Service | Port | Purpose |
+|---|---:|---|
+| vLLM | 8000 | OpenAI-compatible chat completions and `/metrics` |
+| Agent API | 8001 | `/answer` text-to-SQL endpoint |
+| Prometheus | 9090 | Scrapes vLLM metrics |
+| Grafana | 3000 | Serving dashboard |
+| Langfuse | 3001 | Agent traces and metadata tags |
 
-  
+## Repository Map
 
--  **Hardware:** 1× H100
+```text
+agent/          LangGraph nodes, routing, prompts, FastAPI server
+config/         H100, trace, load, and debug runtime profiles
+evals/          Curated eval set and execution-accuracy runner
+infra/          Prometheus and Grafana provisioning
+load_test/      Full-agent RPS driver
+results/        JSON evidence for evals, traces, vLLM checks, and load tests
+screenshots/    Required visual evidence
+scripts/        Setup, vLLM, capture, package, and project runner scripts
+submission/     Generated final zip, ignored by git
+```
 
--  **Software:** Docker + docker-compose, Python with `python3-dev` headers (vLLM's torch.compile path needs them), uv, git  
+## Quick Start
 
----
-
-
-## Phase 0 (Setup)
-
-  
-You'll be working on a cloud VM. All services in this assignment listen on `localhost` on the VM, so to reach their UIs from your laptop browser you need to forward ports over your SSH session.
-
-You need five ports forwarded for the full assignment: **3000** (Grafana), **9090** (Prometheus), **3001** (Langfuse), **8000** (vLLM), **8001** (your agent server).
-
-
-**VSCode or Cursor.** Both have a Remote-SSH extension - install it, then `F1` → *Remote-SSH: Connect to Host* → add the VM. Once connected, the *Ports* panel at the bottom of the editor lets you forward each port with one click: hit *Forward a Port*, type `3000`, repeat for the other four. You also get a local-feeling editor working on the remote files, which makes the rest of the assignment much less painful.
-
-  
-
-**Plain SSH (fallback).**
+The target environment is a Nebius H100 VM running Ubuntu 24.04 for NVIDIA GPUs.
+All services listen on the VM, so forward ports from your laptop:
 
 ```bash
 ssh -L 3000:localhost:3000 \
@@ -72,368 +123,250 @@ ssh -L 3000:localhost:3000 \
     <user>@<vm-host>
 ```
 
-  
-
-Each `-L <local-port>:localhost:<vm-port>` line forwards a port on your local machine to the same port on the VM. With the session open, `http://localhost:3000` in your local browser hits Grafana on the VM.
-
-Once connected and forwarded, run the rest on the VM:
+Install dependencies, create `.env`, load BIRD data, and start observability:
 
 ```bash
-# 1. Clone repo and install dependencies
-git clone <repo-url>
-cd <repo-folder>
-uv sync
-
-# 2. Configure environment (Langfuse keys go here in Phase 4)
-cp .env.example .env
-
-# 3. Load BIRD subset (~500 MB sqlite + JSONs)
-uv run python scripts/load_data.py
-
-# 4. Start the o11y stack
-docker compose up -d
+./scripts/run-full-project.sh setup
+./scripts/run-full-project.sh stack
 ```
 
-Sanity-check from your laptop browser:
+Fill `.env` before model serving and tracing:
 
-  
-
-- Prometheus → http://localhost:9090
-
-- Grafana → http://localhost:3000 (admin / admin)
-
-- Langfuse → http://localhost:3001 (sign up locally, instant)
-
-  
-
-If a URL doesn't load, the port forward is the most likely culprit.
-
-### What you should have in the end:
-- Five ports forwarded; three UIs reachable from your laptop browser
-- BIRD data under `data/bird/`
-- `.env` created from the template
-
-
----
-
-  
-
-## Phase 1 (vLLM)
-
-Imagine the minimal SLO your leadership can buy is something like this:
-
-> **P95 end-to-end agent latency under 5 seconds, 10+ RPS (1rps = 1 full agent run per second) over a 5-minute window.**
-
-
-The model is fixed: `Qwen/Qwen3-30B-A3B-Instruct-2507`. The hardware is fixed: 1× H100 80GB. Everything else is up to you, use your knowledge of inference optimizations.
-
-We are not enumerating which parameters to consider on purpose. Knowing which levers to reach for, given a workload profile (1.5-3K-token prompts, short structured outputs, ~2-3 dependent calls per user request) and a latency target, is the apply-the-lectures part of the assignment. Heads-up: you'll need to iterate.   
-
-There's an example launch script at `scripts/start_vllm.sh` to get you started - feel free to modify it or roll your own. The [vLLM docs](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html) are your reference for the available flags.
-
-### What to do:
-1.  Start vLLM with your initial configuration.
-
-2.  Confirm the model loads, responds, and the output looks reasonable. Try firing 3-5 inputs from `evals/eval_set.jsonl` manually.
-3. Find your config. You'll probably need to revisit this once you have your agent running.
-4.  Write down your configuration in `REPORT.md` and explain it.
-
-### What you should have in the end:
-- vLLM serving Qwen3-30B-A3B at `http://localhost:8000`
-- A few manual queries returning sensible SQL
-- A screenshot of vLLM serving + one manual query returning SQL (`screenshots/vllm_manual_query.png`)
-- Your config flags + one-line justifications in `REPORT.md`
-
----
-
-  
-
-## H100 is not needed all the time
-
-You don't have to occupy an H100 VM to make progress on every phase. The agent and the o11y stack talk to *any* OpenAI-compatible server, so you can build and debug against a lighter backend and switch to the real endpoint only when the numbers matter. Configure the backend via `VLLM_BASE_URL` / `VLLM_MODEL` / `OPENAI_API_KEY` in `.env` (see the commented block there). Consider two options:
-
-- Hosted API: point at e.g. OpenAI with a your own key. It exposes no Prometheus metrics though.
-- CPU-only vLLM: run vLLM on CPU with a small stand-in model like `Qwen/Qwen3-0.6B`. See the [CPU install docs](https://docs.vllm.ai/en/latest/getting_started/installation/cpu.html) for more details.
-
-What you can do off the H100:
-
-| Phase | Off-GPU? | Notes |
-|---|---|---|
-| 2 (Grafana) | CPU-vLLM only | Hosted APIs expose no `/metrics`. Build panels and confirm they react against a CPU vLLM; absolute numbers are unrepresentative. |
-| 3 (Agent) | Either | Pure graph / prompt wiring. |
-| 4 (Tracing) | Either | Langfuse captures the LangGraph spans regardless of backend. |
-| 5 (Evals) | Either | Validate the eval harness end-to-end; real pass rates must come from the 30B endpoint. |
-
-Anything you report e.g. eval pass rates, latency, the Phase 6 SLO must come from the real `Qwen3-30B-A3B` on the H100.
-
----
-
-## Phase 2 (o11y core)
-
-Prometheus is already configured to scrape vLLM's `/metrics`. Grafana is already configured with Prometheus as a datasource and a starter dashboard with 2 pre-built panels.
-
-### What to do:
-
-Open the starter dashboard in Grafana and build it out to cover three categories of serving health, drawing from what vLLM exposes at `/metrics`:
-
-1.  **Latency**, with percentiles. The dashboard should let you look at it during a load test and answer "is the system slow, and if so, where in the request lifecycle?"
-2.  **Throughput**, with percentiles where it makes sense. Tokens out, requests served, queues, generation rate. Pick what's actually useful for someone owning this serving stack.
-3. **KV cache.** The metric (or metrics) that tell you whether you have headroom for more concurrency or you're about to evict.
-
-We are not naming the specific metrics on purpose. Exploring `/metrics` and picking the right ones for each category is part of the work. Aim for a dashboard a teammate could open at 3 AM on a Friday night in a bar and read the picture.
-
-The starter dashboard at `infra/grafana/provisioning/dashboards/serving.json` gives you 2 pre-built panels to build on - feel free to extend it in the Grafana UI or edit the JSON directly. The [vLLM metrics docs](https://docs.vllm.ai/en/latest/usage/metrics.html) describe what each metric means, and the [Grafana docs](https://grafana.com/docs/grafana/latest/) are your reference for building panels.
-
-### What you should have in the end:
-- Grafana dashboard covering latency, throughput, KV cache
-- Every panel visibly reacts when you fire requests
-- A screenshot of the full dashboard with panels reacting to a burst of requests (`screenshots/grafana_serving.png`)
-- Dashboard JSON committed under `infra/grafana/provisioning/dashboards/`
-
----
-
-## Phase 3 (Agent)
-
-The goal is to build a simple self-consistency inspired agent that:
-- converts an English question into a SQL query,
-- runs it against a sqlite DB, 
-- verifies the result makes sense, and revises if it doesn't.
-
-  
-
-The graph (already sketched in `agent/graph.py`):
-
-  
-
-```
-question + schema
-       │
-       ▼
-┌─────────────────┐
-│ generate_sql    │  ── vLLM call #1
-└─────────────────┘
-       │
-       ▼
-┌─────────────────┐
-│ execute         │  (provided - runs SQL, returns rows or error)
-└─────────────────┘
-       │
-       ▼
-┌─────────────────┐
-│ verify          │  ── vLLM call #2
-└─────────────────┘  asks: is this answer plausible?
-       │             outputs: {ok: bool, issue: str}
-       │
-ok=true├──► return SQL + rows
-       │
-ok=false├──► ┌─────────────────┐
-             │ revise          │  ── vLLM call #3 (and back to execute)
-             └─────────────────┘
-                    │
-                    ▼
-             loop (max 3 total iterations)
+```text
+HF_TOKEN=...
+LANGFUSE_PUBLIC_KEY=...
+LANGFUSE_SECRET_KEY=...
+LANGFUSE_HOST=http://localhost:3001
 ```
 
-  
-
-> **Tip:** this phase is pure agent logic - you don't need the H100 running to build the graph and draft prompts. See [Developing without the H100](#developing-without-the-h100). Do final prompt tuning against the real `Qwen3-30B-A3B` endpoint, though - behavior and tokenization differ between models.
-
-### What to do:
-
-  
-
-1.  **Implement the LLM-calling nodes** in `agent/graph.py`. `generate_sql_node` is filled in as a worked example - `verify`, `revise`, and the `route_after_verify` router are yours, and each docstring spells out what the node must return. The mechanics (LLM client, graph wiring, `execute`, schema rendering) are scaffolded; the prompts and the verify/revise logic are the actual exercise.
-
-2.  **Write the prompts** in `agent/prompts.py`. Aim for it to fire on the obvious cases: SQL errored, zero rows when the question implies rows exist, returned columns clearly don't answer the question.
-
-3.  **Wire the conditional edge** in `agent/graph.py` so verify-false routes back into a revise step (which then re-executes). Cap the loop at 3-5 iterations.
-
-4.  **Test interactively** with 5 questions from `evals/eval_set.jsonl`. Confirm that at least one question triggers a revise.
-
-A way to test: 
+Start vLLM and the agent:
 
 ```bash
+./scripts/run-full-project.sh vllm
+CONFIG_FILE=config/profiles/h100.env ./scripts/run-full-project.sh agent
+./scripts/run-full-project.sh health
+```
 
+Ask the agent:
+
+```bash
 curl -X POST http://localhost:8001/answer \
   -H "Content-Type: application/json" \
-  -d '{"question": "...", "db": "..."}'
+  -d '{"question":"List down Ajax'\''s superpowers.","db":"superhero"}'
 ```
 
-### What you should have in the end:
-- Agent server at `http://localhost:8001`
-- `verify → revise` loop wired with an iteration cap
-- At least one test question that triggers a revise
+## Runner Commands
 
----
+`scripts/run-full-project.sh` is the primary operator entrypoint.
 
-  
+| Command | What it does |
+|---|---|
+| `setup` | `uv sync --frozen`, create `.env` if missing, load BIRD data |
+| `stack` | Start Prometheus, Grafana, Langfuse, and backing services |
+| `vllm` | Start vLLM with `scripts/start_vllm.sh` |
+| `agent` | Start the FastAPI agent |
+| `health` | Check agent, vLLM, Prometheus, and Grafana |
+| `eval` | Run baseline eval to `results/eval_baseline.json` |
+| `eval-after` | Run post-tuning eval to `results/eval_after_tuning.json` |
+| `load-full` | Run the configured full-agent load test |
+| `package` | Create the final deliverables zip without rerunning the project |
+| `stop-all` | Stop agent, vLLM, and observability services |
+| `h100-final` | Full H100 workflow using `config/profiles/h100.env` by default |
 
-## Phase 4 (Agent o11y)
+`h100-final` consumes H100 time. Use `package` when you only need the
+submission archive.
 
-  
-Langfuse is running locally from your docker-compose, you need to point your agent at it.  
+## Runtime Profiles
 
-### What to do:
+| Profile | Purpose |
+|---|---|
+| `config/profiles/h100.env` | Canonical final profile. Fast verifier, 8 workers, schema pruning, value grounding, 10.5 RPS load config. |
+| `config/profiles/full-agent.env` | Same final fast-verifier profile plus vLLM tuning variables. |
+| `config/profiles/full-agent-no-cache.env` | Diagnostic quality profile with LLM verifier enabled and response cache disabled. |
+| `config/profiles/langfuse-trace.env` | Trace profile with LLM verify/revise enabled for Langfuse evidence. |
+| `config/profiles/openai-debug.env.example` | Off-H100 OpenAI-compatible debug profile. |
 
-  
-
-1. Sign up for a local Langfuse account at `http://localhost:3001`
-
-2. Create a project, grab the public and secret keys.
-
-3. Add them to `.env`.
-
-4. Add the Langfuse callback handler to your LangGraph invocation:
-
-```python
-
-from langfuse.callback import CallbackHandler
-
-handler =  CallbackHandler()  # picks up env vars
-
-result = graph.invoke(state,  config={"callbacks": [handler]})
-
-```
-
-5. Fire 10 questions through the agent.
-
-6. Open Langfuse UI. Find a trace and inspect it. You should see a waterfall with `generate_sql`, `verify`, and (sometimes) `revise` as nested spans, each with its prompt, response, latency, and token count.
-
-7.  Tag your traces with metadata, you'll need it during Phase 6.
-
-### What you should have in the end:
-- Langfuse capturing traces from agent runs
-- One trace inspected showing the `generate_sql` / `verify` / (sometimes) `revise` waterfall (`screenshots/langfuse_trace.png`)
-- Traces tagged with metadata you'll filter on in Phase 6
-- A screenshot of the trace list with your metadata tags visible (`screenshots/langfuse_tags.png`)
-
----
-
-## Phase 5 (Evals)
-
-You have 30 curated questions in `evals/eval_set.jsonl`. Each one has question text, target DB, gold SQL, expected result rows.
-
-The eval signal is execution accuracy: run the agent's final SQL and the gold SQL against the target DB, compare result sets after canonicalizing (sort rows, ignore column-name case). Match → correct, no match → incorrect. SQL has many syntactically different ways to express the same query, but if two queries produce identical row sets on the same data, they're answering the same question.
-
-### What to do:
-
-1. Implement `evals/run_eval.py`. It should:
-
-- Read the eval set
-
-- Call the agent (HTTP) on each question
-
-- Compute execution accuracy by running both SQLs against the target DB and comparing canonicalized row sets
-
--  Record how many iterations the agent took, and the pass rate at each iteration (i.e., if we had stopped after iter 0, what would pass rate be? After iter 1? Iter 2?)
-
-- Write results to `results/eval_baseline.json`
-
-2.  Run baseline eval. Note, this will hit your vLLM endpoint with 30 questions × ~2 vLLM calls each = ~60 requests. Watch Grafana while it runs.
-
-3.  Look at the per-iteration pass rate. If iter 0 pass rate is the same as iter 3 pass rate, your agent architecture is doing nothing. If iter 3 is meaningfully higher, the loop is earning its keep.
-
-### What you should have in the end:
-- `evals/run_eval.py` working end-to-end
-- `results/eval_baseline.json` with overall + per-iteration pass rates
-- A screenshot of the Grafana dashboard while the baseline eval runs (`screenshots/grafana_eval_run.png`)
-- A read on whether the agent loop is doing real work
-  
-
----
-
-## Phase 6 (SLOs)
-
-
-This is where the configuration from Phase 1 meets reality. The target is the platform SLO from Phase 1:
-
-> **P95 end-to-end agent latency under 5 seconds, 10+ RPS (1rps = 1 full agent run per second) over a 5-minute window.**
-
- 
-### What to do:
-
-
-1.  Run the load test against your current configuration:
+When switching profiles, restart the agent:
 
 ```bash
+./scripts/run-full-project.sh stop-agent
+CONFIG_FILE=config/profiles/langfuse-trace.env ./scripts/run-full-project.sh agent
+```
 
-uv run python load_test/driver.py --rps n --duration 300
+## vLLM Serving Configuration
 
-```  
+The model server is launched by [scripts/start_vllm.sh](scripts/start_vllm.sh).
 
-Watch the Grafana dashboard while it runs.
+| Setting | Final value | Why |
+|---|---:|---|
+| Model | `Qwen/Qwen3-30B-A3B-Instruct-2507` | Assignment model |
+| Tensor parallel | `1` | One H100, no distributed overhead |
+| dtype | `bfloat16` | Native H100 precision without quantization risk |
+| GPU memory utilization | `0.94` | High KV capacity with runtime headroom |
+| Max model length | `6144` | Enough for 1.5-3K schema prompts and short SQL |
+| Max sequences | `48` | Enough concurrency for 10+ agent RPS |
+| Max batched tokens | `24576` | Supports schema-heavy prefill batches |
+| Chunked prefill | enabled | Keeps long prompts from blocking decode |
+| Request logs | disabled | Reduces load-test overhead |
 
-2.  Either you hit the SLO or you don't. If you hit it on the first try - cool, but still take an iteration where you push past it to find what actually breaks. The point of this phase is the diagnosis skill, not just the green check.
+## Agent Design
 
-3.  Diagnose. Look at the dashboard. Which metric moves first as load ramps? Where is the system spending its time? Form a specific hypothesis about what's holding you back. Don't guess at a fix until the hypothesis is grounded in something you can point at on the dashboard.
+The agent graph is implemented in [agent/graph.py](agent/graph.py), with prompts
+in [agent/prompts.py](agent/prompts.py).
 
-4.  Change one thing, re-run and confirm in the dashboard that the metric you targeted actually moved. Then ask whether end-to-end latency moved with it as sometimes a metric improves and the SLO doesn't, which is its own lesson.
+```text
+attach_schema
+  -> generate_sql
+  -> execute
+  -> verify
+       -> end if ok or budget exhausted
+       -> revise -> execute -> verify otherwise
+```
 
-5.  Iterate. Each iteration should produce: a one-line note in `REPORT.md` of the form *"saw X → hypothesized Y → changed Z → result was W"*, and a Grafana screenshot. Three or four iterations is normal. If you're on iteration seven, you're probably guessing instead of reading metrics - stop and re-read the dashboard.
+The baseline profile uses an LLM verifier, and the recorded eval proves the loop
+adds value: iteration 0 scores 13/30, while iteration 1 reaches 16/30. The final
+SLO profile uses `AGENT_FAST_VERIFY=1` to avoid paying for an LLM verifier call
+on most requests; that is why the post-tuning eval intentionally records a
+quality regression.
 
-6.  Run the eval set against your final configuration. Save to `results/eval_after_tuning.json`. If your tuning regressed quality, that's part of the writeup, analyze it.
+## Observability
 
-7.  Document the full cycle in `REPORT.md`: baseline numbers, the iterations you went through, the final numbers, whether quality survived.
+Prometheus scrapes vLLM metrics through [infra/prometheus.yml](infra/prometheus.yml).
+Grafana loads [infra/grafana/provisioning/dashboards/serving.json](infra/grafana/provisioning/dashboards/serving.json).
 
-### What you should have in the end:
-- An iteration log in `REPORT.md` of the form *"saw X → hypothesized Y → changed Z → result was W"*
-- A before/after Grafana pair around the change that moved the needle (`screenshots/grafana_before.png`, `screenshots/grafana_after.png`)
-- `results/eval_after_tuning.json` showing whether quality survived
-- An honest verdict - SLO hit, or SLO missed with the gap quantified
+The dashboard answers three questions:
 
----
-
-## Phase 7 (Docs)
-
-Wrap up `REPORT.md`. It should have:
-
-1.  Serving configuration (Phase 1), your chosen flags, one line of justification each.
-
-2.  Baseline eval results (Phase 5), overall pass rate, per-iteration pass rate, brief commentary.
-
-3.  Hitting the SLO (Phase 6), baseline performance vs. SLO, the iteration log, the final numbers.
-
-4.  Agent value, one paragraph. Did the loop actually help? How do you know? Cite the per-iteration pass rate.
-
-5.  What you'd do with more time, and be specific here! "Add Kubernetes" doesn't count.
-
-Aim at 2-3 pages max.
-
-### What you should have in the end:
-- `REPORT.md` complete, 2-3 pages
-- All artifacts from the Final deliverables table present in the repo
-
-## Final deliverables
-
-By the end, your repo should contain:
-
-| File | What it is |
+| Question | Panels |
 |---|---|
-| `REPORT.md` | Your writeup (≤ 3 pages) |
-| `infra/grafana/provisioning/dashboards/serving.json` | Your Grafana dashboard with all required panels |
-| `agent/graph.py`, `agent/prompts.py` | Your implemented agent |
-| `evals/run_eval.py` | Your eval runner |
-| `results/eval_baseline.json` | Baseline eval results |
-| `results/eval_after_tuning.json` | Post-tuning eval results |
-| `screenshots/vllm_manual_query.png` | vLLM serving + a manual query returning SQL (Phase 1) |
-| `screenshots/grafana_serving.png` | The full Grafana dashboard with panels reacting to load (Phase 2) |
-| `screenshots/langfuse_trace.png` | A Langfuse trace showing a verify→revise loop (Phase 4) |
-| `screenshots/langfuse_tags.png` | The Langfuse trace list with your metadata tags visible (Phase 4) |
-| `screenshots/grafana_eval_run.png` | The Grafana dashboard while the baseline eval runs (Phase 5) |
-| `screenshots/grafana_before.png`, `screenshots/grafana_after.png` | Before/after the tuning change that moved the needle (Phase 6) |
+| Is it slow? | e2e p50/p95/p99 latency |
+| Where is it slow? | queue, prefill, decode, TTFT, inter-token latency |
+| Is there headroom? | running/waiting requests, token throughput, KV cache, prefix cache |
 
----
+Langfuse tracing is enabled when `LANGFUSE_PUBLIC_KEY` and
+`LANGFUSE_SECRET_KEY` are set. Traces include `generate_sql`, `verify`, and
+`revise` spans, plus metadata tags for phase, runner, request id, DB id, and
+question hash.
 
-## Grading
+## Evaluation
 
-We want to see your thoughts and reasoning process, not the green checkmarks. Showing where you got stuck is better than omitting mentions of these points. A missed SLO with a metric-grounded diagnosis is better than a hit SLO you can't explain.
+Run baseline:
 
-| Area | Weight | What a strong submission shows |
-|---|---|---|
-| **Serving config & justification** (Phase 1) | 15% | vLLM serving Qwen3-30B-A3B on the H100, with flags chosen *for this workload* (not defaults) and a one-line rationale each that shows you understood the MoE / prompt-shape / latency tradeoffs. |
-| **Observability dashboard** (Phase 2) | 15% | Latency (percentiles), throughput, and KV-cache panels built from the right `/metrics`, that visibly react under load and actually answer "is it slow, and where in the request lifecycle?" Readable cold. |
-| **Agent design** (Phase 3) | 10% | `verify → revise` loop wired with an iteration cap, prompts that catch the obvious failure cases, and at least one question that genuinely triggers a revise. |
-| **Agent tracing** (Phase 4) | 5% | Langfuse capturing the `generate_sql / verify / (revise)` waterfall, with metadata tags you actually use in Phase 6. |
-| **Eval rigor** (Phase 5) | 15% | Correct execution-accuracy comparison (canonicalized row sets), overall + per-iteration pass rate, and an honest read on whether the loop earns its keep. |
-| **SLO diagnosis & iteration** (Phase 6) | 25% | A metric-grounded iteration log - *"saw X → hypothesized Y → changed Z → result W"* - with before/after evidence the targeted metric moved, and whether end-to-end latency *and* quality followed. Diagnosis quality counts more than hitting the number. |
-| **Report & communication** (Phase 7) | 15% | `REPORT.md` clear, honest about misses, ≤3 pages, and "what I'd do with more time" is specific (not "add Kubernetes"). |
+```bash
+./scripts/run-full-project.sh eval
+```
+
+Run post-tuning:
+
+```bash
+./scripts/run-full-project.sh eval-after
+```
+
+[evals/run_eval.py](evals/run_eval.py) calls the agent, executes both predicted
+SQL and gold SQL against the target SQLite DB, canonicalizes row sets, and
+computes execution accuracy plus per-iteration pass rate.
+
+| Artifact | Result |
+|---|---|
+| `results/eval_baseline.json` | 16/30 correct, 53.3% |
+| `results/eval_after_tuning.json` | 14/30 correct, 46.7% |
+
+## SLO Load Test
+
+Target:
+
+```text
+p95 end-to-end agent latency under 5s at 10+ full-agent RPS over 300s
+```
+
+Run final load test:
+
+```bash
+CONFIG_FILE=config/profiles/h100.env ./scripts/run-full-project.sh load-full
+```
+
+Final recorded evidence:
+
+```text
+results/load_test_after_tuning.json
+```
+
+| Metric | Value |
+|---|---:|
+| Target RPS | 10.5 |
+| Actual RPS | 10.45 |
+| OK requests | 3150/3150 |
+| p50 | 1.20s |
+| p95 | 3.97s |
+| p99 | 5.77s |
+
+## Final Deliverables
+
+The required table from `TASK.md` is represented by these files:
+
+```text
+REPORT.md
+infra/grafana/provisioning/dashboards/serving.json
+agent/graph.py
+agent/prompts.py
+evals/run_eval.py
+results/eval_baseline.json
+results/eval_after_tuning.json
+screenshots/vllm_manual_query.png
+screenshots/grafana_serving.png
+screenshots/langfuse_trace.png
+screenshots/langfuse_tags.png
+screenshots/grafana_eval_run.png
+screenshots/grafana_before.png
+screenshots/grafana_after.png
+```
+
+Create the exact deliverables zip:
+
+```bash
+./scripts/run-full-project.sh package
+zipinfo -1 submission/mlops-assignment-submission.zip
+unzip -t submission/mlops-assignment-submission.zip
+```
+
+Generated data, logs, and the zip are ignored by git. The required final JSON
+and screenshot artifacts are explicitly unignored in [.gitignore](.gitignore).
+
+## External References
+
+| Component | Canonical source |
+|---|---|
+| Qwen3 model | [Hugging Face: Qwen/Qwen3-30B-A3B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507) |
+| vLLM | [GitHub: vllm-project/vllm](https://github.com/vllm-project/vllm), [OpenAI-compatible server docs](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html) |
+| LangGraph | [GitHub: langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) |
+| Langfuse | [GitHub: langfuse/langfuse](https://github.com/langfuse/langfuse), [docs](https://langfuse.com/docs) |
+| Grafana | [GitHub: grafana/grafana](https://github.com/grafana/grafana) |
+| Prometheus | [GitHub: prometheus/prometheus](https://github.com/prometheus/prometheus) |
+| BIRD benchmark | [Official site](https://bird-bench.github.io/), [GitHub org](https://github.com/bird-bench) |
+| GitLab vLLM reference | [GitLab self-hosted vLLM deployment docs](https://docs.gitlab.com/administration/gitlab_duo_self_hosted/vllm_gpt_oss_120b/) |
+
+## Troubleshooting
+
+Check services:
+
+```bash
+./scripts/run-full-project.sh health
+```
+
+Expected endpoints:
+
+```text
+http://localhost:8000/v1/models
+http://localhost:8001/health
+http://localhost:9090/-/healthy
+http://localhost:3000/api/health
+http://localhost:3001
+```
+
+Common issues:
+
+| Symptom | Check |
+|---|---|
+| Browser cannot open Grafana/Langfuse | SSH port forwarding is active |
+| Agent profile did not change | Stop the old agent before restarting with `CONFIG_FILE=...` |
+| vLLM is not scraped | `http://localhost:8000/metrics` responds on the VM |
+| Package command fails | One of the final deliverable files is missing |

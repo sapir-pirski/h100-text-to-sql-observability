@@ -1,0 +1,33 @@
+.git/
+.gitignore
+.dockerignore
+
+# Python and uv local state
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.python-version
+.uv-cache/
+
+# Secrets and local config
+.env
+.env.local
+
+# Large/generated runtime artifacts
+data/bird/
+logs/
+submission/
+results/
+screenshots/
+
+# Local model/cache directories
+.cache/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Assignment/reference material not needed in images
+*.pdf

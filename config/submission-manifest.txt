@@ -1,0 +1,19 @@
+# Final deliverables from TASK.md.
+#
+# The package action in scripts/run-full-project.sh uses this same required set
+# directly, so the archive is intentionally limited to these files.
+
+REPORT.md
+infra/grafana/provisioning/dashboards/serving.json
+agent/graph.py
+agent/prompts.py
+evals/run_eval.py
+results/eval_baseline.json
+results/eval_after_tuning.json
+screenshots/vllm_manual_query.png
+screenshots/grafana_serving.png
+screenshots/langfuse_trace.png
+screenshots/langfuse_tags.png
+screenshots/grafana_eval_run.png
+screenshots/grafana_before.png
+screenshots/grafana_after.png
