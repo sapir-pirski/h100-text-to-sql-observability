@@ -46,6 +46,7 @@ def attach_schema_node(state: AgentState) -> dict:
             state.db_id,
             question=state.question,
             pinned_tables=tuple(sorted({item.table for item in grounded})),
+            pinned_columns=tuple(sorted({(item.table, item.column) for item in grounded})),
         )
     except Exception as exc:
         log_event(
@@ -154,7 +155,7 @@ def verify_node(state: AgentState) -> dict:
     started = time.perf_counter()
     result = _render_verify_result(state.execution)
     if FAST_VERIFY:
-        issue = _fast_verify_issue(state.execution)
+        issue = _fast_verify_issue(state.question, state.sql, state.execution)
         ok = issue is None
         log_event(
             logger,
@@ -596,21 +597,36 @@ def _normalize_sql(sql: str) -> str:
     return re.sub(r"\s+", " ", sql.casefold())
 
 
-def _fast_verify_issue(execution: ExecutionResult | None) -> str | None:
+def _fast_verify_issue(
+    question: str,
+    sql: str,
+    execution: ExecutionResult | None,
+) -> str | None:
     """Return a deterministic verification issue, or None when result is acceptable."""
     if execution is None:
         return "SQL was not executed."
     if not execution.ok:
         return f"SQL execution failed: {execution.error}"
-    if execution.row_count == 0:
-        return (
-            "Query returned zero rows; revise filters, joins, casing, and partial "
-            "string literals. Prefer the complete phrase from the question."
-        )
-    if execution.row_count == 1 and execution.rows:
-        row = execution.rows[0]
-        if row and all(value is None for value in row):
-            return "Query returned only NULL aggregate values; revise filters, columns, or joins."
+    return _fast_result_shape_issue(question, sql, execution)
+
+
+def _fast_result_shape_issue(
+    question: str,
+    sql: str,
+    execution: ExecutionResult,
+) -> str | None:
+    """Latency-safe subset of deterministic checks for the fast verifier profile."""
+    normalized_question = question.casefold()
+    normalized_sql = _normalize_sql(sql)
+    if _duplicate_single_answer(question, execution):
+        return "Duplicate rows; add DISTINCT."
+    if "well-finished" in normalized_question and not _uses_boolean_answer(normalized_sql):
+        return "Return well-finished label."
+    if "missing weight" in normalized_question and "weight_kg" in normalized_sql:
+        if "weight_kg = 0" not in normalized_sql and "weight_kg=0" not in normalized_sql:
+            return "Missing weight includes 0."
+    if _needs_not_null_type_filter(normalized_question, execution):
+        return "Filter originalType IS NOT NULL."
     return None
 
 

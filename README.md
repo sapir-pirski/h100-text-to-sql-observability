@@ -32,11 +32,11 @@ submission/mlops-assignment-submission.zip
 |---|---|
 | Model | `Qwen/Qwen3-30B-A3B-Instruct-2507` on 1x H100 80GB |
 | Baseline eval | 16/30 correct, 53.3% execution accuracy |
-| Post-SLO eval | 14/30 correct, 46.7% execution accuracy |
+| Post-SLO eval | 18/30 correct, 60.0% execution accuracy |
 | Agent value | Baseline improves from 13/30 at iteration 0 to 16/30 after revision |
-| Final load | 10.45 actual RPS for 300s, 3150/3150 ok |
-| Final latency | p50 1.20s, p95 3.97s, p99 5.77s |
-| Verdict | SLO hit, with an explicit quality tradeoff |
+| Final load | 10.46 actual RPS for 300s, 3150/3150 ok |
+| Final latency | p50 1.38s, p95 3.87s, p99 7.83s |
+| Verdict | SLO hit while improving post-tuning quality |
 
 ## Evidence Gallery
 
@@ -225,9 +225,9 @@ attach_schema
 
 The baseline profile uses an LLM verifier, and the recorded eval proves the loop
 adds value: iteration 0 scores 13/30, while iteration 1 reaches 16/30. The final
-SLO profile uses `AGENT_FAST_VERIFY=1` to avoid paying for an LLM verifier call
-on most requests; that is why the post-tuning eval intentionally records a
-quality regression.
+SLO profile uses schema linking plus `AGENT_FAST_VERIFY=1` with a narrow set of
+deterministic repair triggers, avoiding the LLM verifier on most requests while
+raising post-tuning execution accuracy to 18/30.
 
 ## Observability
 
@@ -268,7 +268,7 @@ computes execution accuracy plus per-iteration pass rate.
 | Artifact | Result |
 |---|---|
 | `results/eval_baseline.json` | 16/30 correct, 53.3% |
-| `results/eval_after_tuning.json` | 14/30 correct, 46.7% |
+| `results/eval_after_tuning.json` | 18/30 correct, 60.0% |
 
 ## SLO Load Test
 
@@ -287,17 +287,17 @@ CONFIG_FILE=config/profiles/h100.env ./scripts/run-full-project.sh load-full
 Final recorded evidence:
 
 ```text
-results/load_test_after_tuning.json
+results/load_test_10_5rps_300s_full_agent_final.json
 ```
 
 | Metric | Value |
 |---|---:|
 | Target RPS | 10.5 |
-| Actual RPS | 10.45 |
+| Actual RPS | 10.46 |
 | OK requests | 3150/3150 |
-| p50 | 1.20s |
-| p95 | 3.97s |
-| p99 | 5.77s |
+| p50 | 1.38s |
+| p95 | 3.87s |
+| p99 | 7.83s |
 
 ## Final Deliverables
 

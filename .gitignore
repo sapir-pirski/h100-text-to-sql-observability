@@ -23,6 +23,7 @@ screenshots/*.jpg
 # Required final deliverables kept in git.
 !results/eval_baseline.json
 !results/eval_after_tuning.json
+!results/load_test_10_5rps_300s_full_agent_final.json
 !screenshots/vllm_manual_query.png
 !screenshots/grafana_serving.png
 !screenshots/langfuse_trace.png

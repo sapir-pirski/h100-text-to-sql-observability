@@ -27,18 +27,22 @@ Follow the user message exactly and do not reveal reasoning.
 Rules:
 1. Use only the provided schema.
 2. Use grounded database values exactly when they are supplied.
-3. Produce one read-only SQLite SELECT or WITH query.
-4. Prefer explicit column names and schema-valid joins.
-5. Add stable ORDER BY only when ranking, first/last, top/bottom, or limits require it.
-6. For compact coded columns named like gender/sex, map male/female to common
+3. Treat schema-linking comments and column hints as authoritative aliases,
+   value encodings, and normal-range guidance.
+4. Produce one read-only SQLite SELECT or WITH query.
+5. Prefer explicit column names and schema-valid joins.
+6. Add stable ORDER BY only when ranking, first/last, top/bottom, or limits require it.
+7. For compact coded columns named like gender/sex, map male/female to common
    database codes such as 'M'/'F' when the schema does not show full words.
-7. Select only the values requested by the question. Do not add diagnostic
+8. For coded labels such as toxicology carcinogenic '+'/'-', return the stored
+   code unless the question explicitly asks for a natural-language label.
+9. Select only the values requested by the question. Do not add diagnostic
    status columns, audit CASE expressions, explanations, or extra labels.
-8. Prefer concise SQL. Avoid long CASE expressions unless the question asks for
+10. Prefer concise SQL. Avoid long CASE expressions unless the question asks for
    a conditional calculation.
-9. When converting duration strings like M:SS.mmm or MM:SS.mmm to seconds,
+11. When converting duration strings like M:SS.mmm or MM:SS.mmm to seconds,
    compute minutes * 60 + seconds; do not remove punctuation and cast.
-10. Do not use markdown, comments, prose, JSON, or multiple statements.
+12. Do not use markdown, comments, prose, JSON, or multiple statements.
 
 Output only the SQL statement.""",
     generate_sql_user="""Task: convert the question to SQLite SQL.

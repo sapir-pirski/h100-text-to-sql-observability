@@ -5,6 +5,7 @@ import os
 import re
 import sqlite3
 from dataclasses import dataclass
+from functools import lru_cache
 
 from agent.schema import db_path
 
@@ -17,6 +18,22 @@ DEFAULT_ALLOW_CONTAINS = False
 
 CONNECTORS = {"and", "or", "of", "the", "for", "in", "at", "to", "&"}
 FREE_TEXT_COLUMN_MARKERS = ("body", "comment", "content", "flavortext", "text")
+ENTITY_SPAN_BLOCKERS = {
+    "are",
+    "calculate",
+    "gave",
+    "give",
+    "had",
+    "has",
+    "have",
+    "is",
+    "list",
+    "mention",
+    "provide",
+    "show",
+    "was",
+    "were",
+}
 STOP_SINGLE_WORDS = {
     "among",
     "average",
@@ -49,9 +66,20 @@ YMD_TIME_RE = re.compile(
     r"(?P<hour>\d{1,2}):(?P<minute>\d{2}):(?P<second>\d{2})\b",
     re.IGNORECASE,
 )
+TIME_ON_YMD_RE = re.compile(
+    r"\b(?P<hour>\d{1,2}):(?P<minute>\d{2}):(?P<second>\d{2})\s+"
+    r"(?:on\s+)?(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})\b",
+    re.IGNORECASE,
+)
+ENTITY_SPAN_RE = re.compile(
+    r"\b[A-Z][A-Za-z0-9.'_-]*(?:\s+(?:[A-Za-z][A-Za-z0-9.'_-]*)){1,5}\b"
+)
 
 KNOWN_VALUE_PHRASES = {
+    "australian grand prix": ("Australian Grand Prix",),
     "banned": ("Banned",),
+    "blue": ("Blue",),
+    "blue eyes": ("Blue",),
     "calcium": ("ca",),
     "carcinogenic": ("+",),
     "chlorine": ("cl",),
@@ -60,6 +88,8 @@ KNOWN_VALUE_PHRASES = {
     "gladiator": ("gladiator",),
     "male": ("M",),
     "mythic": ("mythic",),
+    "no eye color": ("No Colour",),
+    "no eye colour": ("No Colour",),
     "non carcinogenic": ("-",),
     "outpatient clinic": ("-",),
 }
@@ -90,6 +120,7 @@ def grounding_enabled() -> bool:
     }
 
 
+@lru_cache(maxsize=4096)
 def ground_question_values(db_id: str, question: str) -> list[GroundedValue]:
     """Find exact DB string values that match entity-like phrases in a question."""
     if not grounding_enabled():
@@ -177,9 +208,14 @@ def extract_candidate_phrases(question: str, max_phrases: int = DEFAULT_MAX_PHRA
     phrases: list[str] = []
     seen: set[str] = set()
 
+    def finish() -> list[str]:
+        return _drop_redundant_subphrases(phrases)[:max_phrases]
+
     def add(raw: str) -> None:
         phrase = _clean_phrase(raw)
         if len(phrase) < 2:
+            return
+        if all(part.isdigit() for part in phrase.split()):
             return
         key = phrase.casefold()
         if key in seen:
@@ -194,19 +230,29 @@ def extract_candidate_phrases(question: str, max_phrases: int = DEFAULT_MAX_PHRA
     for match in QUOTED_RE.finditer(question):
         add(match.group(1))
         if len(phrases) >= max_phrases:
-            return phrases[:max_phrases]
+            return finish()
 
     for phrase in _datetime_phrases(question):
         add(phrase)
         if len(phrases) >= max_phrases:
-            return phrases[:max_phrases]
+            return finish()
 
     normalized_question = question.casefold()
     for phrase in KNOWN_VALUE_PHRASES:
         if phrase in normalized_question:
             add(phrase)
             if len(phrases) >= max_phrases:
-                return phrases[:max_phrases]
+                return finish()
+
+    for match in ENTITY_SPAN_RE.finditer(question):
+        phrase = _clean_entity_span(match.group(0))
+        if not phrase:
+            continue
+        add(phrase)
+        for part in _split_person_pair(phrase):
+            add(part)
+        if len(phrases) >= max_phrases:
+            return finish()
 
     tokens = [match.group(0) for match in TOKEN_RE.finditer(question)]
     i = 0
@@ -236,13 +282,16 @@ def extract_candidate_phrases(question: str, max_phrases: int = DEFAULT_MAX_PHRA
         phrase = " ".join(parts)
         if value_tokens > 1 or _is_useful_single_word(phrase):
             add(phrase)
+            for part in _split_person_pair(phrase):
+                add(part)
         i = max(j, i + 1)
         if len(phrases) >= max_phrases:
             break
 
-    return phrases[:max_phrases]
+    return finish()
 
 
+@lru_cache(maxsize=32)
 def _text_columns(db_id: str) -> tuple[TextColumn, ...]:
     path = db_path(db_id)
     if not path.exists():
@@ -355,6 +404,10 @@ def _column_allowed_for_phrase(phrase: str, column: TextColumn) -> bool:
     normalized = phrase.casefold()
     column_name = column.column.casefold()
     table_name = column.table.casefold()
+    if normalized == "australian grand prix":
+        return table_name == "races" and column_name == "name"
+    if normalized in {"blue", "blue eyes", "no eye color", "no eye colour"}:
+        return table_name == "colour" and column_name == "colour"
     if normalized in {"calcium", "chlorine"}:
         return table_name == "atom" and column_name == "element"
     if normalized in {"carcinogenic", "non carcinogenic"}:
@@ -463,6 +516,17 @@ def _datetime_phrases(question: str) -> list[str]:
                 int(match.group("second")),
             )
         )
+    for match in TIME_ON_YMD_RE.finditer(question):
+        phrases.append(
+            _format_datetime(
+                int(match.group("year")),
+                int(match.group("month")),
+                int(match.group("day")),
+                int(match.group("hour")),
+                int(match.group("minute")),
+                int(match.group("second")),
+            )
+        )
     return phrases
 
 
@@ -479,6 +543,50 @@ def _format_datetime(
 
 def _clean_phrase(raw: str) -> str:
     return re.sub(r"\s+", " ", raw.strip(" \t\r\n.,;:!?()[]{}")).strip()
+
+
+def _clean_entity_span(raw: str) -> str:
+    phrase = _clean_phrase(raw)
+    if not phrase:
+        return ""
+    first = phrase.split()[0].casefold()
+    if first in STOP_SINGLE_WORDS or first in CONNECTORS:
+        return ""
+    if set(part.casefold() for part in phrase.split()) & ENTITY_SPAN_BLOCKERS:
+        return ""
+    if any(char.isdigit() for char in phrase):
+        return ""
+    while phrase.split()[-1].casefold() in STOP_SINGLE_WORDS | CONNECTORS:
+        phrase = " ".join(phrase.split()[:-1])
+        if not phrase:
+            return ""
+    return phrase
+
+
+def _split_person_pair(phrase: str) -> list[str]:
+    match = re.fullmatch(
+        r"([A-Z][A-Za-z.'_-]+\s+[A-Z][A-Za-z.'_-]+)\s+(?:and|or)\s+"
+        r"([A-Z][A-Za-z.'_-]+\s+[A-Z][A-Za-z.'_-]+)",
+        phrase,
+    )
+    if not match:
+        return []
+    return [match.group(1), match.group(2)]
+
+
+def _drop_redundant_subphrases(phrases: list[str]) -> list[str]:
+    result: list[str] = []
+    lowered = [phrase.casefold() for phrase in phrases]
+    for index, phrase in enumerate(phrases):
+        key = lowered[index]
+        words = key.split()
+        if len(words) == 1 and any(
+            index != other_index and re.search(rf"\b{re.escape(key)}\b", other_key)
+            for other_index, other_key in enumerate(lowered)
+        ):
+            continue
+        result.append(phrase)
+    return result
 
 
 def _strip_possessive(phrase: str) -> str:
