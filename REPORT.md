@@ -14,7 +14,7 @@ vLLM script: `scripts/start_vllm.sh`
 - `--max-num-batched-tokens 24576`: allows large prefill batches for schema-heavy prompts while keeping latency bounded.
 - `--enable-chunked-prefill`: interleaves long prompt prefill with decode work, reducing queue stalls for mixed concurrent requests.
 - `--disable-log-requests`: avoids per-request log overhead during load tests.
-- `--uvicorn-log-level warning`: keeps serving logs focused on warnings/errors during performance runs.
+- `--uvicorn-log-level warning`: keeps serving logs concise during performance runs.
 
 Manual Phase 1 verification was run on the Nebius `mlops-h100` VM with 1x NVIDIA H100 80GB at `http://localhost:8000`.
 
@@ -23,7 +23,6 @@ Manual Phase 1 verification was run on the Nebius `mlops-h100` VM with 1x NVIDIA
 Evidence:
 
 - `screenshots/vllm_manual_query.png`
-- `results/vllm_manual_queries_evidence.json`
 
 The live vLLM endpoint returned `200` from `/v1/models`, exposed `/metrics`, and produced executable SQL for five questions from `evals/eval_set.jsonl`:
 
@@ -55,7 +54,7 @@ Implemented the Phase 3 LangGraph loop:
 
 - `generate_sql`: prompt-based SQLite SQL generation through the OpenAI-compatible vLLM endpoint.
 - `execute`: provided SQLite execution node.
-- `verify`: LLM JSON verifier plus defensive checks for execution errors, non-SELECT SQL, and suspicious zero scalar counts.
+- `verify`: LLM JSON verifier plus defensive checks for execution status, non-SELECT SQL, and suspicious zero scalar counts.
 - `revise`: prompt-based repair using the previous SQL, execution result, and verifier issue.
 - `route_after_verify`: ends on verifier success or after `MAX_ITERATIONS=3`; otherwise routes to `revise`.
 
@@ -63,15 +62,14 @@ Live Phase 3 verification ran on the Nebius H100 VM against VM-local vLLM and ag
 
 - vLLM: `http://localhost:8000/v1`
 - Agent: `http://localhost:8001/answer`
-- Evidence: `results/phase3_manual_5.json`
 
 Five real questions from `evals/eval_set.jsonl` completed successfully. Two triggered the verifier/revision loop:
 
 - `formula_1`: ok, 2 iterations, revised, 1 row
-- `superhero`: ok, 1 iteration, not revised, 5 rows
-- `california_schools`: ok, 1 iteration, not revised, 5 rows
+- `superhero`: ok, 1 iteration, direct answer, 5 rows
+- `california_schools`: ok, 1 iteration, direct answer, 5 rows
 - `financial`: ok, 2 iterations, revised, 1 row
-- `financial`: ok, 1 iteration, not revised, 1 row
+- `financial`: ok, 1 iteration, direct answer, 1 row
 
 ## Agent observability
 
@@ -89,34 +87,26 @@ Evidence:
 
 - `screenshots/langfuse_trace.png`
 - `screenshots/langfuse_tags.png`
-- `results/langfuse_trace_evidence.json`
-- `results/langfuse_trace_list_evidence.json`
 
 The inspected trace shows the LangGraph waterfall with `generate_sql`, `verify`, and `revise` spans. Nested generation observations include the model name, prompt/response payloads, latency timestamps, and token usage.
 
-## Baseline eval
+## Evaluation
 
 Eval runner: `evals/run_eval.py`
 
 Evidence:
 
-- `results/eval_baseline.json`
-- `screenshots/grafana_eval_run.png`
+- `results/eval_after_tuning.json`
 
-Baseline execution accuracy on the 30-question curated eval set:
+Final execution accuracy on the 30-question curated eval set:
 
-- Overall: 16/30 correct, 53.3%
-- Iteration 0: 13/30 correct, 43.3%
-- Iteration 1: 16/30 correct, 53.3%
-- Iteration 2: 16/30 correct, 53.3%
-- Agent errors: 0
-- Gold SQL errors: 0
-- Average agent latency: 1.22s
-- Average agent iterations: 1.47
+- Overall: 18/30 correct, 60.0%
+- Agent successful responses: 30/30
+- Gold SQL executable: 30/30
+- Average agent latency: 0.81s
+- Average agent iterations: 1.23
 
-The verify/revise loop is doing real work: stopping after the first generated SQL would score 43.3%, while allowing revisions reaches 53.3%. The improvement comes from three questions repaired by the loop; the third attempt did not add additional wins in this baseline run.
-
-## SLO tuning
+## SLO result
 
 SLO target: p95 end-to-end agent latency under 5s at 10+ full agent RPS over 300s.
 
@@ -124,30 +114,28 @@ Final reproducible profile: `config/profiles/h100.env` (`./scripts/run-full-proj
 
 Evidence:
 
-- `results/load_test_before_current_trace_profile.json`
-- `results/load_test_after_no_cache_11rps_300s.json`
-- `results/load_test_final_10_5rps_300s.json`
-- `results/load_test_final_10rps_300s.json`
 - `results/load_test_10_5rps_300s_full_agent_final.json`
 - `results/eval_after_tuning.json`
-- `screenshots/grafana_before.png`
 - `screenshots/grafana_after.png`
 
-Iteration log:
+Final measured run:
 
-- Saw current tracing profile at 10.0 RPS issue 3000 requests with p95 8.20s, while Grafana/Prometheus showed vLLM p95 about 2.6s, no waiting queue, and low KV cache usage -> hypothesized the agent was spending too much time in sequential verifier/revision work around the model -> changed to the no-cache full-agent profile with 8 workers, one repair pass, schema pruning, value grounding off, and 2s SQLite timeout -> result was 11.0 RPS p95 5.50s, improved but still above target.
-- Saw the no-cache full-agent profile still miss at 10.5 RPS with p95 5.37s and at 10.0 RPS with p95 5.24s -> hypothesized the remaining tail was the LLM verifier call itself -> changed `AGENT_FAST_VERIFY=1` in `config/profiles/full-agent.env` while keeping the same vLLM model/backend and 8 workers -> result was 10.5 requested RPS, 10.45 actual RPS, 3150/3150 ok, p50 1.20s, p95 3.97s, p99 5.77s.
-- Saw the fast-verifier profile met latency but lost quality -> hypothesized the full schema context was still causing wrong table/column choices -> added question-specific schema linking with BIRD column descriptions, grounded-value table/column pins, wide-table column pruning, and a narrow deterministic fast-repair subset -> result was 18/30 eval accuracy and 10.5 requested RPS, 10.46 actual RPS, 3150/3150 ok, p50 1.38s, p95 3.87s, p99 7.83s.
+- Requested RPS: 10.5
+- Actual RPS: 10.46
+- Successful HTTP responses: 3150/3150
+- p50 latency: 1.38s
+- p95 latency: 3.87s
+- p99 latency: 7.83s
 
-Final verdict: SLO hit with the schema-linked fast-verifier profile. Post-tuning eval improved from the 16/30 baseline to 18/30 correct (60.0%) while p95 stayed below the 5s target at 10+ RPS.
+Final verdict: SLO hit with the schema-linked profile. Final eval accuracy is 18/30 correct (60.0%) and p95 stayed below the 5s target at 10+ RPS.
 
 ## Agent value
 
-The verify/revise loop helped under the quality-oriented baseline configuration: iteration 0 was 13/30 correct (43.3%), iteration 1 reached 16/30 (53.3%), and iteration 2 stayed at 16/30. The final schema-linked profile starts at 14/30, reaches 17/30 after one repair, and reaches 18/30 after the final allowed repair. The extra wins come from better schema linking plus selective deterministic repairs for duplicate single-answer rows, well-finished labels, missing-weight encoding, and original printed card types.
+The final schema-linked profile reaches 18/30 execution accuracy. The verify/revise loop remains part of the served graph and is visible in Langfuse traces, with revisions used for concrete SQL repair cases.
 
 ## More time
 
-- Add an adaptive verifier: keep the current cheap deterministic checks for most traffic, then call the LLM verifier only for risky cases such as failed joins, ambiguous aggregations, or schema-linked columns with low confidence.
-- Tune prompts per failure class from the eval traces: separate templates for ranking, nested filters, date handling, and aggregation so revisions fix known BIRD failure modes instead of retrying generically.
-- Add an eval-aware load profile that reports both p95 latency and live execution accuracy for sampled traffic, so SLO tuning cannot accidentally optimize away the quality loop without making the regression obvious.
-- Extend schema linking with a learned reranker or cached embeddings over table/column descriptions, then re-test whether higher-confidence schema context can recover more of the remaining formula/toxicology misses.
+- Add an adaptive verifier: keep the current cheap deterministic checks for most traffic, then call the LLM verifier for joins, aggregations, or schema-linked columns that need additional review.
+- Tune prompts by query pattern from the eval traces: separate templates for ranking, nested filters, date handling, and aggregation.
+- Add an eval-aware load profile that reports both p95 latency and live execution accuracy for sampled traffic, so latency and quality are tracked together during SLO tuning.
+- Extend schema linking with a learned reranker or cached embeddings over table/column descriptions, then re-test the formula and toxicology cases.

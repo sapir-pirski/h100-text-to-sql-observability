@@ -16,9 +16,13 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from playwright.sync_api import Page, sync_playwright
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
-
+from playwright.sync_api import (
+    Page,
+    sync_playwright,
+)
+from playwright.sync_api import (
+    TimeoutError as PlaywrightTimeoutError,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 SCREENSHOTS = ROOT / "screenshots"

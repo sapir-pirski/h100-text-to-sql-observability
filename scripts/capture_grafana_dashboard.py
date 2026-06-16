@@ -8,7 +8,6 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-
 DEFAULT_URL = "http://localhost:3000/d/vllm-serving/vllm-serving?orgId=1&from=now-2h&to=now&refresh=5s"
 DEFAULT_CHROMIUM = "/snap/bin/chromium"
 
