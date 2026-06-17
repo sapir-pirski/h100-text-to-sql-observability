@@ -74,13 +74,13 @@ The JSON artifacts are the source of truth for recorded numbers:
 ```mermaid
 flowchart LR
     analyst["Analyst question"] --> api["FastAPI agent :8001"]
-    api --> graph["LangGraph: generate -> execute -> verify -> revise"]
-    graph --> sqlite[(BIRD SQLite DBs)]
-    graph --> vllm["vLLM OpenAI-compatible API :8000"]
+    api --> agent_graph["LangGraph: generate -> execute -> verify -> revise"]
+    agent_graph --> sqlite[(BIRD SQLite DBs)]
+    agent_graph --> vllm["vLLM OpenAI-compatible API :8000"]
     vllm --> qwen["Qwen3-30B-A3B-Instruct-2507"]
     vllm --> prom["Prometheus scrape :9090"]
     prom --> grafana["Grafana dashboard :3000"]
-    graph --> langfuse["Langfuse traces :3001"]
+    agent_graph --> langfuse["Langfuse traces :3001"]
 ```
 
 | Service | Port | Role |
